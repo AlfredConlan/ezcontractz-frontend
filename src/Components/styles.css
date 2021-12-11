@@ -1,0 +1,49 @@
+:root {
+    font-size: 14px;
+  }
+  
+  .thead,
+  tr {
+    background-color: white;
+  }
+  
+  .tr,
+  th {
+    white-space: nowrap;
+    padding: 1rem;
+    text-align: left;
+    background-color: white;
+  }
+  
+  tbody,
+  tr:nth-child(odd) {
+    background-color: #e6f6fe;
+  }
+  
+  .tbody,
+  tr,
+  td {
+    white-space: nowrap;
+    width: 20%;
+    overflow-wrap: break-word;
+    padding: 0.5rem;
+  }
+
+  .float-container {
+    border: 3px solid #fff;
+    padding: 20px;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+    background-color: red;
+}  
+
+.btnOrange {
+  background-color: #c55a11;
+  color: white;
+}
+
