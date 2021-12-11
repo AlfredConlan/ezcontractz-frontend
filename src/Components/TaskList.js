@@ -1,5 +1,3 @@
-// import Profile from "./Profile";
-// import BasicTable from './dataTable'
 import TaskTable from "./TasksTable";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
