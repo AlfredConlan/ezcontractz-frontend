@@ -6,14 +6,14 @@ import SetUserName from "./SetUserName";
 
 export default function TaskList() {
   return (
-    <container>
+    <div>
       <SetUserName />
-      <container className="profileHouseSection">
+      <div className="profileHouseSection">
         <h1 className="text-center p-4 text-primary">Your Tasks</h1>
-      </container>
-      <container className="taskList">
+      </div>
+      <div className="taskList">
         <TaskTable />
-      </container>
-    </container>
+      </div>
+    </div>
   );
 }
