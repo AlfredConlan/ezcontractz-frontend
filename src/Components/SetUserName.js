@@ -20,7 +20,7 @@ export default function SetUserName() {
           console.log(response.status);
           if (response.status === 200) {
             console.log("The response is: ", response);
-            localStorage.setItem("UserName", response.userName);
+            localStorage.setItem("UserName", response[0].userName);
             console.log(localStorage.getItem("UserName"));
           } else {
             document.location.replace("https://ezcontractz.herokuapp.com:3000/registration");
