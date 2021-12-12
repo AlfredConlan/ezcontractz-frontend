@@ -9,6 +9,28 @@ export default function SearchBar() {
   const [show,setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  // -----------------------------------------------------------Form Validation--------------------------------------------------------------//
+  function validateInput(e) {
+    // e.preventDefault();
+    if (document.getElementById("alias").value === "null") {
+      alert("Please select a category.");
+      document.getElementById("alias").focus();
+      return false;
+    }
+    if (document.getElementById("zipcode").value === "") {
+      alert("Please provide your Zip Code!");
+      document.getElementById("zipcode").focus();
+      return false;
+    } else if (document.getElementById("zipcode").value.length !== 5) {
+      console.log(document.getElementById("zipcode").value.length);
+      alert("Zip Code must be 5 digits!");
+      document.getElementById("zipcode").focus();
+      return false;
+    } else {
+      SearchBar();
+    }
+  }
 
   //1. need to make the category a drop down selector - complete
   //2. need to make the default value "select category"
@@ -66,6 +88,7 @@ export default function SearchBar() {
           <Col xs="auto">
             <Button
               onClick={() => {
+                validateInput();
                 fetch("https://ezcontractz-backend.herokuapp.com/yelp", {
                   method: "POST",
                   credentials: "include",
