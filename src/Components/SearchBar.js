@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Form, Button, InputGroup, FormControl, Card } from "react-bootstrap";
+import { Row, Col, Form, Button, InputGroup, FormControl, Card, Modal } from "react-bootstrap";
 import "./Grid.css";
 
 export default function SearchBar() {
