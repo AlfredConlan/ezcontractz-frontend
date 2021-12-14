@@ -1,9 +1,7 @@
-// src/views/profile.js
-
 // import React from "react";
 import { useEffect } from "react";
-
 import { useAuth0 } from "@auth0/auth0-react";
+import "./profile.css";
 
 const Profile = () => {
   const { user } = useAuth0();
@@ -11,7 +9,8 @@ const Profile = () => {
 
   useEffect(() => {
     (async function () {
-      const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
+      const urlString = "https://backend.ezcontractz.com/users/" + email;
+      console.log(email);
       await fetch(urlString, {
         method: "GET",
         headers: {
@@ -21,8 +20,7 @@ const Profile = () => {
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log(response.status);
-          if (response.status === 200) {
+          if (response.length !== 0) {
             console.log("The response is: ", response);
             const Image = document.getElementById("userImage");
             const FirstName = document.getElementById("userFirstName");
@@ -50,16 +48,25 @@ const Profile = () => {
       <div>
         <h1 className="text-center p-4 text-primary">Profile</h1>
       </div>
-      <div className="row align-items-center profile-header mt-lg-3">
-        <div className=" container col-md-6 text-start text-md-center">
-          <img id="userImage" src="" alt="Profile" className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
-          <p id="userFirstName" className="lead"></p>
-          <p id="userLastName" className="lead"></p>
-          <p id="userEmail" className="lead"></p>
-          <p id="userUserName" className="lead"></p>
-          <p id="userLocation" className="lead"></p>
+      <div className="container mt-lg-3">
+        <div className="card w-25">
+          <div className="card-body">
+            <img id="userImage" src="" alt="Profile" className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
+            <p id="userFirstName" className="lead card-text"></p>
+            <p id="userLastName" className="lead card-text"></p>
+            <p id="userEmail" className="lead card-text"></p>
+            <p id="userUserName" className="lead card-text"></p>
+            <p id="userLocation" className="lead card-text"></p>
+            <div className="text-center">
+              <a href="/registration" class="btn btn-primary">
+                Edit Profile
+              </a>
+            </div>
+          </div>
         </div>
+        <div className=" container col-md-6 text-start text-md-center"></div>
       </div>
+
       {/* <div className="row">
         <pre className="col-12 text-light bg-dark p-4">{JSON.stringify(user, null, 2)}</pre>
       </div> */}
