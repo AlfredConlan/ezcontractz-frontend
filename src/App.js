@@ -2,7 +2,7 @@
 import React from "react";
 // import BasicTable from "./Components/dataTable";
 import { Switch, Route } from "react-router-dom";
-import TaskList from "./Components/TaskListOld";
+import TaskList from "./Components/TaskList";
 import Navbar from "./Components/Navbar";
 import ContractorSearch from "./Components/ContractorSearch";
 import AdminDash from "./Components/AdminDash";
@@ -24,7 +24,7 @@ function App() {
 
         <ProtectedRoute exact path="/contractor-search" component={ContractorSearch} />
 
-        <ProtectedRoute exact path="/tasks" component={TaskList} />
+        <Route exact path="/tasks" component={TaskList} />
 
         <ProtectedRoute exact path="/admin" component={AdminDash} />
 

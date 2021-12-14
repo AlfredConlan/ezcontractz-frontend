@@ -1,9 +1,9 @@
-import "./Registration.css";
-import { useAuth0 } from "@auth0/auth0-react";
+import "./registration.css";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 function Registration() {
-  const { user } = useAuth0();
-  const { given_name, family_name, email } = user;
+  // const { user } = useAuth0();
+  // const { given_name, family_name, email } = user;
 
   function registerUser() {
     fetch("https://ezcontractz-backend.herokuapp.com/users", {
@@ -19,6 +19,7 @@ function Registration() {
         email: document.getElementById("InputEmail").value,
         location: document.getElementById("InputZip").value,
         role: "user",
+        userImage: document.getElementById("InputImage").value,
       }),
     })
       .then((res) => res.json())
@@ -33,7 +34,7 @@ function Registration() {
           return;
         } else {
           alert("User was added");
-          document.location.replace("https://ezcontractz.herokuapp.com:3000/tasks");
+          document.location.replace("http://localhost:3000/tasks");
         }
       });
   }
@@ -84,23 +85,24 @@ function Registration() {
       <div className="col">
         <div className="container border border-primary border-2 mt-5 bg-white loginBackground">
           <form
+            autoComplete="off"
             className="pb-3 pt-3"
             onSubmit={(e) => {
               validateRegistration(e);
             }}
           >
             <div className="mb-3 text-start">
-              <h1 className="text-center p-4 text-primary">Please fill out your profile</h1>
+              <h1 className="text-center p-4 text-primary">Edit Your Profile</h1>
               <label for="InputFirstName" className="form-label">
                 First Name
               </label>
-              <input type="text" className="form-control" id="InputFirstName" required value={given_name} />
+              <input type="text" className="form-control" id="InputFirstName" required placeholder="Test" />
             </div>
             <div className="mb-3 text-start">
               <label for="InputLastName" className="form-label">
                 Last Name
               </label>
-              <input type="text" className="form-control" id="InputLastName" required value={family_name} />
+              <input type="text" className="form-control" id="InputLastName" required />
             </div>
             <div className="mb-3 text-start">
               <label for="InputUserName" className="form-label">
@@ -112,13 +114,19 @@ function Registration() {
               <label for="InputEmail" className="form-label">
                 Email address
               </label>
-              <input type="email" className="form-control" id="InputEmail" required value={email} />
+              <input type="email" className="form-control" id="InputEmail" required />
             </div>
             <div className="mb-3 text-start">
               <label for="InputZip" className="form-label">
                 Zip Code
               </label>
               <input type="text" className="form-control" id="InputZip" required />
+            </div>
+            <div className="mb-3 text-start">
+              <label for="InputImage" className="form-label">
+                Profile Photo
+              </label>
+              <input type="file" className="form-control" id="InputImage" alt="Profile Image" required />
             </div>
             {/* <div className="mb-3 text-start">
               <label for="InputPassword" className="form-label">

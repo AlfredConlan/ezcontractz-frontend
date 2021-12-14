@@ -2,34 +2,34 @@ import TaskTable from "./TasksTable";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 
-export default function TaskList() {
+const TaskList = () => {
   const { user } = useAuth0();
   const { email } = user;
 
+  console.log(email);
+
   useEffect(() => {
-    (async function () {
-      const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
-      await fetch(urlString, {
-        method: "GET",
-        headers: {
-          // Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response.status);
-          if (response.status === 200) {
-            console.log("The response is: ", response);
-            localStorage.setItem("UserName", response[0].userName);
-            console.log(localStorage.getItem("UserName"));
-          } else {
-            document.location.replace("https://ezcontractz.herokuapp.com:3000/registration");
-          }
-        });
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
+    fetch(urlString, {
+      method: "GET",
+      headers: {
+        // Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("Response.length = ", response.length);
+        if (response.length !== 0) {
+          console.log("The response is: ", response);
+          localStorage.setItem("UserName", response[0].userName);
+          console.log("Username is: ", localStorage.getItem("UserName"));
+        } else {
+          console.log("Response other than 200");
+          document.location.replace("http://localhost:3000/registration");
+        }
+      });
+  }, [email]);
 
   return (
     <div>
@@ -41,4 +41,6 @@ export default function TaskList() {
       </div>
     </div>
   );
-}
+};
+
+export default TaskList;
