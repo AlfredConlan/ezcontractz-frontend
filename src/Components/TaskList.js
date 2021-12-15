@@ -4,32 +4,31 @@ import { useEffect } from "react";
 
 const TaskList = () => {
   const { user } = useAuth0();
-  const { email } = user;
-
-  console.log(email);
-
   useEffect(() => {
-    const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
-    fetch(urlString, {
-      method: "GET",
-      headers: {
-        // Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log("Response.length = ", response.length);
-        if (response.length !== 0) {
-          console.log("The response is: ", response);
-          localStorage.setItem("UserName", response[0].userName);
-          console.log("Username is: ", localStorage.getItem("UserName"));
-        } else {
-          console.log("Response other than 200");
-          document.location.replace("http://localhost:3000/registration");
-        }
-      });
-  }, [email]);
+    if (user) {
+      const { email } = user;
+      const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
+      fetch(urlString, {
+        method: "GET",
+        headers: {
+          // Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log("Response.length = ", response.length);
+          if (response.length !== 0) {
+            console.log("The response is: ", response);
+            localStorage.setItem("UserName", response[0].userName);
+            console.log("Username is: ", localStorage.getItem("UserName"));
+          } else {
+            console.log("Response other than 200");
+            document.location.replace("http://localhost:3000/registration");
+          }
+        });
+    }
+  }, []);
 
   return (
     <div>

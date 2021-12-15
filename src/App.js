@@ -24,7 +24,7 @@ function App() {
 
         <ProtectedRoute exact path="/contractor-search" component={ContractorSearch} />
 
-        <Route exact path="/tasks" component={TaskList} />
+        <ProtectedRoute exact path="/tasks" component={TaskList} />
 
         <ProtectedRoute exact path="/admin" component={AdminDash} />
 
