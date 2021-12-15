@@ -2,9 +2,9 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Trash, Pencil } from "react-bootstrap-icons";
-import "./styles.css";
+import "./styles.css"; 
 import axios from 'axios';
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap"; 
 
 const TaskTable = (props) => {
   const [tasks, setTasks] = useState([]);
@@ -39,8 +39,9 @@ const TaskTable = (props) => {
 
   // Fetching tasks from database - NEED TO UPDATE TO TARGET BASED ON USER NAME
   const retrieveTasks = () => {
-    const user_name = localStorage.getItem("userName");
-    fetch("https://ezcontractz-backend.herokuapp.com/tasks/")
+    const user_name = localStorage.getItem("UserName");
+    console.log(user_name)
+    fetch("https://ezcontractz-backend.herokuapp.com/tasks/" + user_name)
       .then((resp) => resp.json())
       .then((resp) => {
         setTasks(resp);
@@ -96,10 +97,10 @@ const TaskTable = (props) => {
       credentials: "include",
       headers: { 'Content-Type': 'application/json'}, 
       body: JSON.stringify({
+        userName: localStorage.getItem("UserName"),
         taskName: newTask.taskName,
         description: newTask.description,
         maxBudget: newTask.maxBudget,
-        userName: "userName", 
         assignedContractor:newTask.assignedContractor,
         scheduled: newTask.scheduled,
         date: newTask.date,
@@ -222,17 +223,17 @@ const TaskTable = (props) => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Task Name</Form.Label>
-              <Form.Control type="taskName" value={newTask.taskName} name="taskName" placeholder="taskName"
+              <Form.Control type="taskName" value={newTask.taskName} name="taskName" placeholder="Task Name"
                 onChange={(e) => onInputChange(e)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="category">
-              <Form.Label>Description</Form.Label>
-              <Form.Control type="category" value={newTask.category} name="category" placeholder="category"
+              <Form.Label>Category</Form.Label>
+              <Form.Control type="category" value={newTask.category} name="category" placeholder="Category"
                 onChange={(e) => onInputChange(e)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="description">
-              <Form.Label>Max Budget</Form.Label>
-              <Form.Control type="description" value={newTask.description} name="description" placeholder="description"
+              <Form.Label>Description</Form.Label>
+              <Form.Control type="description" value={newTask.description} name="description" placeholder="Description"
                 onChange={(e) => onInputChange(e)}
               />
             </Form.Group>
@@ -248,7 +249,7 @@ const TaskTable = (props) => {
             </Form.Group> */}
             <Form.Group className="mb-3" controlId="maxBudget">
               <Form.Label>Max Budget</Form.Label>
-              <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Value)"
+              <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)"
                 onChange={(e) => onInputChange(e)} />
             </Form.Group>
             <Button variant="secondary" onClick={handleClose}>
