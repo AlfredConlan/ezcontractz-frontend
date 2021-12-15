@@ -2,9 +2,9 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Trash, Pencil } from "react-bootstrap-icons";
-import "./styles.css"; 
+import "./styles.css";
 import axios from 'axios';
-import { Modal, Button, Form } from "react-bootstrap"; 
+import { Modal, Button, Form } from "react-bootstrap";
 
 const TaskTable = (props) => {
   const [tasks, setTasks] = useState([]);
@@ -14,7 +14,7 @@ const TaskTable = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [newTask, setNewTask] = useState({
-    taskName: "", description: "", maxBudget: "", category: "", assignedContractor: "", 
+    taskName: "", description: "", maxBudget: "", category: "", assignedContractor: "",
   });
 
   tasksRef.current = tasks;
@@ -26,10 +26,10 @@ const TaskTable = (props) => {
 
   //Trying to Update State of Modal Form to capture values 
   const onInputChange = (e) => {
-    setNewTask({...newTask,[e.target.name]: e.target.value})
+    setNewTask({ ...newTask, [e.target.name]: e.target.value })
     // setNewTask({...newTask,[e.target.description]: e.target.value})
     // setNewTask({...newTask,[e.target.name]: e.target.value})
-}
+  }
 
   // Not working 
   const onChangeSearchTasks = (e) => {
@@ -95,13 +95,13 @@ const TaskTable = (props) => {
     const requestOptions = {
       method: 'POST',
       credentials: "include",
-      headers: { 'Content-Type': 'application/json'}, 
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         userName: localStorage.getItem("UserName"),
         taskName: newTask.taskName,
         description: newTask.description,
         maxBudget: newTask.maxBudget,
-        assignedContractor:newTask.assignedContractor,
+        assignedContractor: newTask.assignedContractor,
         scheduled: newTask.scheduled,
         date: newTask.date,
         category: newTask.category
@@ -110,7 +110,7 @@ const TaskTable = (props) => {
     fetch('http://localhost:3001/tasks', requestOptions)
       .then(response => response.json())
       .then(data => console.log(data))
-      .then(resp=> {
+      .then(resp => {
         refreshList();
         handleClose();
       })
@@ -178,7 +178,7 @@ const TaskTable = (props) => {
               <button className="btn btn-outline-secondary btnOrange" type="button" onClick={findByTitle}>
                 Search
               </button>
-              <Button variant="primary" className="btn btn-success" onClick={handleShow}>
+              <Button variant="primary" className="btn btn-success ml-5" onClick={handleShow}>
                 Add A Task
               </Button>
             </div>
@@ -226,10 +226,17 @@ const TaskTable = (props) => {
               <Form.Control type="taskName" value={newTask.taskName} name="taskName" placeholder="Task Name"
                 onChange={(e) => onInputChange(e)} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="category">
-              <Form.Label>Category</Form.Label>
-              <Form.Control type="category" value={newTask.category} name="category" placeholder="Category"
-                onChange={(e) => onInputChange(e)} />
+            <Form.Group controlId="custom-select" className="mb-3" >
+              <Form.Label>Select Category</Form.Label>
+              <Form.Control as="select" className="" value={newTask.category}>
+                <option className="d-none">
+                  Select Category
+                </option>
+                {["Carpet Cleaning", "Cleaning", "Drywall", "Electricians", "Garage Door Repair",
+                  "HVAC Repair", "Lawn Care", "Painters", "Pest Control", "Plumbers", "Roofing", "TV Mounting"].map(option => (
+                    <option key={option}>{option}</option>
+                  ))}
+              </Form.Control>
             </Form.Group>
             <Form.Group className="mb-3" controlId="description">
               <Form.Label>Description</Form.Label>
