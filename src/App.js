@@ -20,7 +20,7 @@ function App() {
         {/* UNCOMMENT THE SECTION BELOW TO ENABLE LOGIN/REGISTRATION */}
         {/*-------------------------------------------------------------*/}
 
-        <ProtectedRoute exact path="/" component={TaskList} />
+        {/* <ProtectedRoute exact path="/" component={TaskList} />
 
         <ProtectedRoute exact path="/contractor-search" component={ContractorSearch} />
 
@@ -32,12 +32,12 @@ function App() {
 
         <ProtectedRoute exact path="/aboutus" component={AboutUs} />
 
-        <Route exact path="/registration" component={Registration} />
+        <Route exact path="/registration" component={Registration} /> */}
 
         {/* UNCOMMENT THE SECTION BELOW TO DISABLE LOGIN/REGISTRATION */}
         {/*-------------------------------------------------------------*/}
 
-        {/* <Route exact path="/" component={TaskList} />
+        <Route exact path="/" component={TaskList} />
 
         <Route exact path="/contractor-search" component={ContractorSearch} />
 
@@ -47,7 +47,9 @@ function App() {
 
         <Route exact path="/profile" component={Profile} />
 
-        <Route exact path="/registration" component={Registration} /> */}
+        <Route exact path="/aboutus" component={AboutUs} />
+
+        <Route exact path="/registration" component={Registration} />
       </Switch>
     </Auth0ProviderWithHistory>
   );
