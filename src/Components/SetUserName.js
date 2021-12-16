@@ -23,7 +23,7 @@
 //             localStorage.setItem("UserName", response[0].userName);
 //             console.log(localStorage.getItem("UserName"));
 //           } else {
-//             document.location.replace("https://ezcontractz.herokuapp.com:3000/registration");
+//             document.location.replace("https:/localhost:3000/registration");
 //           }
 //         });
 //     })();

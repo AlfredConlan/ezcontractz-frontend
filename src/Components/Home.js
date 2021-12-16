@@ -1,38 +1,21 @@
-import React, { useState, useEffect } from 'react';
-// import './App.css';
-import MaterialTable from 'material-table';
+import "./home.css";
 
-
-function BasicTable() {
-
-  const [data, setData] = useState([])
-  const columns = [
-    { title: "Task Name", field: "taskName" },
-    { title: "Category", field: "category" },
-    { title: "Description", field: "description" },
-    { title: "Assigned Contractor", field: "assignedContractor" },
-    { title: "Scheduled", field: "scheduled" },
-    { title: "Date", field: 'date' },
-    { title: "Max Budget", field: 'maxBudget' }
-  ]
-  useEffect(() => {
-    fetch("api.mocki.io/v2/23e13f93/")
-      .then(resp => resp.json())
-      .then(resp => {
-        setData(resp)
-        console.log(data);
-      })
-  }, [])
-
+function Home() {
   return (
-    <div className="App">
-      <MaterialTable
-        title="Your Tasks"
-        data={data}
-        columns={columns}
-      />
+    <div className="background-photo">
+      <div className="container text-center">
+        <p className="h1 text-light pt-5">EZContractz</p>
+        <p className="h3 text-light mt-5">A no-hassle way to track your homeowner tasks and find contractors to do the work.</p>
+        {/* <button type="button" className="btn btn-primary mt-5">
+          Get Started
+        </button> */}
+
+        <a href="/tasks" className="btn btn-primary mt-5" role="button">
+          Get Started
+        </a>
+      </div>
     </div>
   );
 }
 
-export default BasicTable;
+export default Home;

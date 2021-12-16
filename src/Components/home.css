@@ -1,0 +1,11 @@
+.background-photo {
+    background-image: url("../Assets/img/house-background.jpg");
+      height: 1200px;
+      /* You must set a specified height */
+      background-position: center;
+      /* Center the image */
+      background-repeat: no-repeat;
+      /* Do not repeat the image */
+      background-size: cover;
+      /* Resize the background image to cover the entire container */
+}
