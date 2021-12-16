@@ -11,7 +11,7 @@ const Profile = () => {
 
   useEffect(() => {
     (async function () {
-      const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
+      const urlString = "https://backend.ezcontractz.com/users/" + email;
       await fetch(urlString, {
         method: "GET",
         headers: {
@@ -38,7 +38,7 @@ const Profile = () => {
             UserName.innerHTML = "Username: <h5>" + response[0].userName + "</h5>";
             Location.innerHTML = "Location: <h5>" + response[0].location + "</h5>";
           } else {
-            document.location.replace("https://ezcontractz.herokuapp.com:3000/registration");
+            document.location.replace("https://localhost:3000/registration");
           }
         });
     })();
@@ -48,7 +48,7 @@ const Profile = () => {
   return (
     <div className="container">
       <div>
-        <h1 className="text-center p-4 text-primary">Profile</h1>
+        <h1 className="text-center p-4 text-white">Profile</h1>
       </div>
       <div className="row align-items-center profile-header mt-lg-3">
         <div className=" container col-md-6 text-start text-md-center">

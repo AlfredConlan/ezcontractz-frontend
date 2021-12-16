@@ -3,7 +3,7 @@ import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Trash, Pencil } from "react-bootstrap-icons";
 import "./styles.css";
-import axios from 'axios';
+import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const TaskTable = (props) => {
@@ -14,24 +14,26 @@ const TaskTable = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [newTask, setNewTask] = useState({
-    taskName: "", description: "", maxBudget: "", category: "", assignedContractor: "",
+    taskName: "",
+    description: "",
+    maxBudget: "",
+    category: "",
+    assignedContractor: "",
   });
 
   tasksRef.current = tasks;
 
-
-
-  //Declaring variables for newTask modal 
+  //Declaring variables for newTask modal
   const { taskName, description, maxBudget } = newTask;
 
-  //Trying to Update State of Modal Form to capture values 
+  //Trying to Update State of Modal Form to capture values
   const onInputChange = (e) => {
-    setNewTask({ ...newTask, [e.target.name]: e.target.value })
+    setNewTask({ ...newTask, [e.target.name]: e.target.value });
     // setNewTask({...newTask,[e.target.description]: e.target.value})
     // setNewTask({...newTask,[e.target.name]: e.target.value})
-  }
+  };
 
-  // Not working 
+  // Not working
   const onChangeSearchTasks = (e) => {
     const searchTasks = e.target.value;
     setSearchTasks(searchTasks);
@@ -40,8 +42,8 @@ const TaskTable = (props) => {
   // Fetching tasks from database - NEED TO UPDATE TO TARGET BASED ON USER NAME
   const retrieveTasks = () => {
     const user_name = localStorage.getItem("UserName");
-    console.log(user_name)
-    fetch("https://ezcontractz-backend.herokuapp.com/tasks/" + user_name)
+    console.log(user_name);
+    fetch("https://backend.ezcontractz.com/tasks/" + user_name)
       .then((resp) => resp.json())
       .then((resp) => {
         setTasks(resp);
@@ -78,24 +80,23 @@ const TaskTable = (props) => {
   const deleteTasks = (rowIndex) => {
     const id = tasksRef.current[rowIndex].id;
     console.log(tasksRef.current[rowIndex].id);
-    axios.delete("http://localhost:3001/tasks/delete/" + id)
-      .then(resp => {
-        console.log(resp)
-        refreshList();
-        // if (resp.data.userDeleted){
-        //   setTriggerUseEffect(triggerUseEffect+1)
-        // }
-      })
+    axios.delete("http://localhost:3001/tasks/delete/" + id).then((resp) => {
+      console.log(resp);
+      refreshList();
+      // if (resp.data.userDeleted){
+      //   setTriggerUseEffect(triggerUseEffect+1)
+      // }
+    });
   };
 
-  // Function to submit task via the modal 
+  // Function to submit task via the modal
   const handleSubmit = (e) => {
     e.preventDefault();
     // setNewTask(taskName, description, maxBudget);
     const requestOptions = {
-      method: 'POST',
+      method: "POST",
       credentials: "include",
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userName: localStorage.getItem("UserName"),
         taskName: newTask.taskName,
@@ -104,17 +105,17 @@ const TaskTable = (props) => {
         assignedContractor: newTask.assignedContractor,
         scheduled: newTask.scheduled,
         date: newTask.date,
-        category: newTask.category
-      })
+        category: newTask.category,
+      }),
     };
-    fetch('http://localhost:3001/tasks', requestOptions)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .then(resp => {
+    fetch("http://localhost:3001/tasks", requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .then((resp) => {
         refreshList();
         handleClose();
-      })
-  }
+      });
+  };
 
   const columns = useMemo(
     () => [
@@ -210,12 +211,7 @@ const TaskTable = (props) => {
           </table>
         </div>
       </div>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>ADD A TASK!</Modal.Title>
         </Modal.Header>
@@ -223,31 +219,43 @@ const TaskTable = (props) => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Task Name</Form.Label>
-              <Form.Control type="taskName" value={newTask.taskName} name="taskName" placeholder="Task Name"
-                onChange={(e) => onInputChange(e)} />
+              <Form.Control type="taskName" value={newTask.taskName} name="taskName" placeholder="Task Name" onChange={(e) => onInputChange(e)} />
             </Form.Group>
-            <Form.Group controlId="custom-select" className="mb-3" >
+            <Form.Group controlId="custom-select" className="mb-3">
               <Form.Label>Select Category</Form.Label>
               <Form.Control as="select" className="" value={newTask.category}>
-                <option className="d-none">
-                  Select Category
-                </option>
-                {["Carpet Cleaning", "Cleaning", "Drywall", "Electricians", "Garage Door Repair",
-                  "HVAC Repair", "Lawn Care", "Painters", "Pest Control", "Plumbers", "Roofing", "TV Mounting"].map(option => (
-                    <option key={option}>{option}</option>
-                  ))}
+                <option className="d-none">Select Category</option>
+                {[
+                  "Carpet Cleaning",
+                  "Cleaning",
+                  "Drywall",
+                  "Electricians",
+                  "Garage Door Repair",
+                  "HVAC Repair",
+                  "Lawn Care",
+                  "Painters",
+                  "Pest Control",
+                  "Plumbers",
+                  "Roofing",
+                  "TV Mounting",
+                ].map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
               </Form.Control>
             </Form.Group>
             <Form.Group className="mb-3" controlId="description">
               <Form.Label>Description</Form.Label>
-              <Form.Control type="description" value={newTask.description} name="description" placeholder="Description"
-                onChange={(e) => onInputChange(e)}
-              />
+              <Form.Control type="description" value={newTask.description} name="description" placeholder="Description" onChange={(e) => onInputChange(e)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="assignedContractor">
               <Form.Label>Assigned Contractor</Form.Label>
-              <Form.Control type="assignedContractor" value={newTask.assignedContractor} name="assignedContractor" placeholder="Assigned Contractor"
-                onChange={(e) => onInputChange(e)} />
+              <Form.Control
+                type="assignedContractor"
+                value={newTask.assignedContractor}
+                name="assignedContractor"
+                placeholder="Assigned Contractor"
+                onChange={(e) => onInputChange(e)}
+              />
             </Form.Group>
             {/* <Form.Group className="mb-3" controlId="scheduled">
               <Form.Label>Scheduled</Form.Label>
@@ -256,13 +264,14 @@ const TaskTable = (props) => {
             </Form.Group> */}
             <Form.Group className="mb-3" controlId="maxBudget">
               <Form.Label>Max Budget</Form.Label>
-              <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)"
-                onChange={(e) => onInputChange(e)} />
+              <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)" onChange={(e) => onInputChange(e)} />
             </Form.Group>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" type="submit">ADD TASK</Button>
+            <Button variant="primary" type="submit">
+              ADD TASK
+            </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>

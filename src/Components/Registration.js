@@ -1,12 +1,12 @@
 import "./Registration.css";
-// import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Registration() {
-  // const { user } = useAuth0();
-  // const { given_name, family_name, email } = user;
+  const { user } = useAuth0();
+  const { given_name, family_name, email } = user;
 
   function registerUser() {
-    fetch("https://ezcontractz-backend.herokuapp.com/users", {
+    fetch("https://backend.ezcontractz.com/users", {
       method: "POST",
       headers: {
         // Accept: "application/json",
@@ -96,13 +96,13 @@ function Registration() {
               <label for="InputFirstName" className="form-label">
                 First Name
               </label>
-              <input type="text" className="form-control" id="InputFirstName" required placeholder="Test" />
+              <input type="text" className="form-control" id="InputFirstName" required defaultValue={given_name} />
             </div>
             <div className="mb-3 text-start">
               <label for="InputLastName" className="form-label">
                 Last Name
               </label>
-              <input type="text" className="form-control" id="InputLastName" required />
+              <input type="text" className="form-control" id="InputLastName" required defaultValue={family_name} />
             </div>
             <div className="mb-3 text-start">
               <label for="InputUserName" className="form-label">
@@ -114,7 +114,7 @@ function Registration() {
               <label for="InputEmail" className="form-label">
                 Email address
               </label>
-              <input type="email" className="form-control" id="InputEmail" required />
+              <input type="email" className="form-control" id="InputEmail" required defaultValue={email} />
             </div>
             <div className="mb-3 text-start">
               <label for="InputZip" className="form-label">
@@ -126,7 +126,7 @@ function Registration() {
               <label for="InputImage" className="form-label">
                 Profile Photo
               </label>
-              <input type="file" className="form-control" id="InputImage" alt="Profile Image" required />
+              <input type="file" name="UserPhoto" accept="image/*" className="form-control" id="InputImage" alt="Profile Image" required />
             </div>
             {/* <div className="mb-3 text-start">
               <label for="InputPassword" className="form-label">
