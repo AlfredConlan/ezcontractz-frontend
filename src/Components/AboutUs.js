@@ -6,7 +6,7 @@ export default function AboutUs() {
     <div className="container">
       <div className="block-heading">
         <p className=" h1 text-white text-center p-4 ">About Us</p>
-        <p className=" h5 text-center p-4 mb-5">
+        <p className=" h5 text-center p-4 mb-5 text-white">
           We are a team of full-stack web developers working on a way to make finding contractors and managing work needed for your home a breeze!
         </p>
       </div>

@@ -24,7 +24,7 @@ const AdminTable = (props) => {
 
   // Fetching users from database
   const retrieveUsers = () => {
-    fetch("https://ezcontractz-backend.herokuapp.com/users")
+    fetch("https://backend.ezcontractz.com/users")
       .then((resp) => resp.json())
       .then((resp) => {
         setUsers(resp);
@@ -54,7 +54,7 @@ const AdminTable = (props) => {
 
   const deleteUsers = (rowIndex) => {
     const userName = usersRef.current[rowIndex].id;
-    axios.delete("https://ezcontractz-backend.herokuapp.com/users/delete/" + userName).then((resp) => {
+    axios.delete("https://backend.ezcontractz.com/users/delete/" + userName).then((resp) => {
       console.log(resp);
       refreshList();
       // if (resp.data.userDeleted){

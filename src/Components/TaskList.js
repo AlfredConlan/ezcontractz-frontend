@@ -8,7 +8,7 @@ const TaskList = () => {
     if (user) {
       const { email } = user;
       if (email) {
-        const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
+        const urlString = "https://backend.ezcontractz.com/users/" + email;
         fetch(urlString, {
           method: "GET",
           headers: {

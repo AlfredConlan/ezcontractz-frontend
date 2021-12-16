@@ -6,7 +6,7 @@ function Registration() {
   const { given_name, family_name, email } = user;
 
   function registerUser() {
-    fetch("https://ezcontractz-backend.herokuapp.com/users", {
+    fetch("https://backend.ezcontractz.com/users", {
       method: "POST",
       headers: {
         // Accept: "application/json",
