@@ -3,36 +3,62 @@ import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Trash, Pencil } from "react-bootstrap-icons";
 import "./styles.css";
+import axios from "axios";
+import { Modal, Button, Form } from "react-bootstrap";
 
 const TaskTable = (props) => {
   const [tasks, setTasks] = useState([]);
   const [searchTasks, setSearchTasks] = useState("");
   const tasksRef = useRef();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [newTask, setNewTask] = useState({
+    taskName: "",
+    description: "",
+    maxBudget: "",
+    category: "",
+    assignedContractor: "",
+  });
 
   tasksRef.current = tasks;
 
-  useEffect(() => {
-    retrieveTasks();
-  }, []);
+  //Declaring variables for newTask modal
+  const { taskName, description, maxBudget } = newTask;
 
+  //Trying to Update State of Modal Form to capture values
+  const onInputChange = (e) => {
+    setNewTask({ ...newTask, [e.target.name]: e.target.value });
+    // setNewTask({...newTask,[e.target.description]: e.target.value})
+    // setNewTask({...newTask,[e.target.name]: e.target.value})
+  };
+
+  // Not working
   const onChangeSearchTasks = (e) => {
     const searchTasks = e.target.value;
     setSearchTasks(searchTasks);
   };
 
-  // Fetching users from database
+  // Fetching tasks from database - NEED TO UPDATE TO TARGET BASED ON USER NAME
   const retrieveTasks = () => {
-    fetch("https://ezcontractz-backend.herokuapp.com/tasks")
+    const user_name = localStorage.getItem("UserName");
+    console.log(user_name);
+    fetch("https://backend.ezcontractz.com/tasks/" + user_name)
       .then((resp) => resp.json())
       .then((resp) => {
         setTasks(resp);
-        console.log(tasks);
+        // console.log(tasks);
+        // console.log(user_name);
       });
   };
 
   const refreshList = () => {
     retrieveTasks();
   };
+
+  useEffect(() => {
+    retrieveTasks();
+  }, []);
 
   const findByTitle = () => {
     tasks
@@ -52,18 +78,42 @@ const TaskTable = (props) => {
   };
 
   const deleteTasks = (rowIndex) => {
-    const tasksName = tasksRef.current[rowIndex].taskName;
-    tasks
-      .remove(tasksName)
-      .then((response) => {
-        props.history.push("/tasks/delete/" + tasksName);
-        let newTasks = [...tasksRef.current];
-        newTasks.splice(rowIndex, 1);
+    const id = tasksRef.current[rowIndex].id;
+    console.log(tasksRef.current[rowIndex].id);
+    axios.delete("http://localhost:3001/tasks/delete/" + id).then((resp) => {
+      console.log(resp);
+      refreshList();
+      // if (resp.data.userDeleted){
+      //   setTriggerUseEffect(triggerUseEffect+1)
+      // }
+    });
+  };
 
-        setTasks(newTasks);
-      })
-      .catch((e) => {
-        console.log(e);
+  // Function to submit task via the modal
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // setNewTask(taskName, description, maxBudget);
+    const requestOptions = {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userName: localStorage.getItem("UserName"),
+        taskName: newTask.taskName,
+        description: newTask.description,
+        maxBudget: newTask.maxBudget,
+        assignedContractor: newTask.assignedContractor,
+        scheduled: newTask.scheduled,
+        date: newTask.date,
+        category: newTask.category,
+      }),
+    };
+    fetch("http://localhost:3001/tasks", requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .then((resp) => {
+        refreshList();
+        handleClose();
       });
   };
 
@@ -129,6 +179,9 @@ const TaskTable = (props) => {
               <button className="btn btn-outline-secondary btnOrange" type="button" onClick={findByTitle}>
                 Search
               </button>
+              <Button variant="primary" className="btn btn-success ml-5" onClick={handleShow}>
+                Add A Task
+              </Button>
             </div>
           </div>
         </div>
@@ -158,6 +211,76 @@ const TaskTable = (props) => {
           </table>
         </div>
       </div>
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>ADD A TASK!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Task Name</Form.Label>
+              <Form.Control type="taskName" value={newTask.taskName} name="taskName" placeholder="Task Name" onChange={(e) => onInputChange(e)} />
+            </Form.Group>
+            <Form.Group controlId="custom-select" className="mb-3">
+              <Form.Label>Select Category</Form.Label>
+              <Form.Control as="select" className="" value={newTask.category}>
+                <option className="d-none">Select Category</option>
+                {[
+                  "Carpet Cleaning",
+                  "Cleaning",
+                  "Drywall",
+                  "Electricians",
+                  "Garage Door Repair",
+                  "HVAC Repair",
+                  "Lawn Care",
+                  "Painters",
+                  "Pest Control",
+                  "Plumbers",
+                  "Roofing",
+                  "TV Mounting",
+                ].map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control type="description" value={newTask.description} name="description" placeholder="Description" onChange={(e) => onInputChange(e)} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="assignedContractor">
+              <Form.Label>Assigned Contractor</Form.Label>
+              <Form.Control
+                type="assignedContractor"
+                value={newTask.assignedContractor}
+                name="assignedContractor"
+                placeholder="Assigned Contractor"
+                onChange={(e) => onInputChange(e)}
+              />
+            </Form.Group>
+            {/* <Form.Group className="mb-3" controlId="scheduled">
+              <Form.Label>Scheduled</Form.Label>
+              <Form.Control type="scheduled" value={newTask.scheduled} name="scheduled" placeholder="Scheduled"
+                onChange={(e) => onInputChange(e)} />
+            </Form.Group> */}
+            <Form.Group className="mb-3" controlId="maxBudget">
+              <Form.Label>Max Budget</Form.Label>
+              <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)" onChange={(e) => onInputChange(e)} />
+            </Form.Group>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              ADD TASK
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" type="submit" >ADD TASK</Button> */}
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

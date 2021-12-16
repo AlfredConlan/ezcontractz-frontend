@@ -4,7 +4,7 @@ function AdminDash() {
   return (
     <container>
       <div>
-        <h1 className="text-center p-4 text-primary">Administration Dashboard</h1>
+        <h1 className="text-center p-4 text-white">Administration Dashboard</h1>
       </div>
       <div>
         <AdminList />
