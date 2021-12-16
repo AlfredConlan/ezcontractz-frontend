@@ -48,7 +48,7 @@ const Profile = () => {
   return (
     <div className="container">
       <div>
-        <h1 className="text-center p-4 text-primary">Profile</h1>
+        <h1 className="text-center p-4 text-white">Profile</h1>
       </div>
       <div className="row align-items-center profile-header mt-lg-3">
         <div className=" container col-md-6 text-start text-md-center">

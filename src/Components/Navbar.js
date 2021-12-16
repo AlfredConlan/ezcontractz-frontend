@@ -11,7 +11,7 @@ function NavBar() {
   return (
     <div>
       <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
-        <Navbar.Brand href="#home" className="ms-5">
+        <Navbar.Brand href="/home" className="ms-5">
           <img src={logo} alt="logo" />
         </Navbar.Brand>
         <Container>
