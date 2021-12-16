@@ -31,7 +31,7 @@ const TaskList = () => {
           });
       }
     }
-  }, []);
+  }, [user]);
 
   return (
     <div>
