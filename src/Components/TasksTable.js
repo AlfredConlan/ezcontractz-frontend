@@ -5,6 +5,7 @@ import { Trash, Pencil } from "react-bootstrap-icons";
 import "./styles.css";
 import axios from 'axios';
 import { Modal, Button, Form } from "react-bootstrap";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const TaskTable = (props) => {
   const [tasks, setTasks] = useState([]);
@@ -18,8 +19,6 @@ const TaskTable = (props) => {
   });
 
   tasksRef.current = tasks;
-
-
 
   //Declaring variables for newTask modal 
   const { taskName, description, maxBudget } = newTask;
@@ -39,14 +38,13 @@ const TaskTable = (props) => {
 
   // Fetching tasks from database - NEED TO UPDATE TO TARGET BASED ON USER NAME
   const retrieveTasks = () => {
-    const user_name = localStorage.getItem("UserName");
+    const user_name = localStorage.getItem("userName");
     console.log(user_name)
-    fetch("https://ezcontractz-backend.herokuapp.com/tasks/" + user_name)
+    fetch("https://ezcontractz-backend.herokuapp.com/tasks/")
       .then((resp) => resp.json())
       .then((resp) => {
         setTasks(resp);
-        // console.log(tasks);
-        // console.log(user_name);
+        console.log(resp);
       });
   };
 
@@ -54,7 +52,36 @@ const TaskTable = (props) => {
     retrieveTasks();
   };
 
+  const { user } = useAuth0();
+
   useEffect(() => {
+    
+    if (user) {
+      const { email } = user;
+      if (email) {
+        const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
+        fetch(urlString, {
+          method: "GET",
+          headers: {
+            // Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            console.log("Response.length = ", response.length);
+            if (response.length !== 0) {
+              console.log("The response is: ", response);
+              localStorage.setItem("UserName", response[0].userName);
+              console.log("Username is: ", localStorage.getItem("UserName"));
+              // } else {
+              console.log("Response is empty");
+              //   document.location.replace("http://localhost:3000/registration");
+            }
+          });
+      }
+    }
+
     retrieveTasks();
   }, []);
 
@@ -78,8 +105,7 @@ const TaskTable = (props) => {
   const deleteTasks = (rowIndex) => {
     const id = tasksRef.current[rowIndex].id;
     console.log(tasksRef.current[rowIndex].id);
-    axios.delete("http://localhost:3001/tasks/delete/" + id)
-      .then(resp => {
+    axios.delete("https://ezcontractz-backend.herokuapp.com/tasks/delete/" + id).then((resp) => {
         console.log(resp)
         refreshList();
         // if (resp.data.userDeleted){
@@ -119,6 +145,10 @@ const TaskTable = (props) => {
   const columns = useMemo(
     () => [
       {
+        Header: "ID",
+        accessor: "id",
+      },
+      {
         Header: "Task Name",
         accessor: "taskName",
       },
@@ -152,7 +182,9 @@ const TaskTable = (props) => {
               <span onClick={() => openTasks(rowIdx)}>
                 <Pencil className="far fa-edit action mr-2" />
               </span>
-              <span onClick={() => deleteTasks(rowIdx)}>
+              <span onClick={() => {
+                deleteTasks(rowIdx)
+              }}>
                 <Trash className="bi bi-trash" />
               </span>
             </div>
