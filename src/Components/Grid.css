@@ -14,29 +14,32 @@
 .contractorCard{
     margin: 20px;
 }
-h1{
+/* h1{
     color:#203864;
 }
 h4{
     color:#203864
-}
+} */
 
 h6{
     color:black;
 }
 
-.mb-2{
+/* .mb-2{
    background-color:#C55A11; 
    
-}
+} */
 
 /*------------------Search Bar-------------------*/
 .SearchBar {
-    align-items:center !important; 
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content:center !important; 
     margin:40px;
 }
 
-.nav-link:hover {
+/* .nav-link:hover {
     background-color:#BF9000 !important;
 }
 
@@ -45,5 +48,5 @@ h6{
 }
 .assignCButton{
     color: #BF9000 !important;
-}
+} */
 
