@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef,} from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Trash, Pencil } from "react-bootstrap-icons";
+import { Trash, Pencil, PlusCircleFill} from "react-bootstrap-icons";
 import "./styles.css";
 import axios from "axios";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Add } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const TaskTable = (props) => {
@@ -93,8 +93,7 @@ const TaskTable = (props) => {
   }, []);
 
   const findByTitle = () => {
-    tasks
-      .findByTitle(tasks)
+    tasks.findByTitle(tasks)
       .then((response) => {
         setTasks(response.data);
       })
@@ -140,7 +139,7 @@ const TaskTable = (props) => {
         category: newTask.category,
       }),
     };
-    fetch("http://localhost:3001/tasks", requestOptions)
+    fetch("https://ezcontractz-backend.herokuapp.com/tasks", requestOptions)
       .then((response) => response.json())
       .then((data) => console.log(data))
       .then((resp) => {
@@ -218,7 +217,10 @@ const TaskTable = (props) => {
                 Search
               </button>
               <Button variant="primary" className="btn btn-success ml-5" onClick={handleShow}>
-                Add A Task
+                Add Task
+               <span className="ml-2">
+                 <PlusCircleFill className="mb-1 pl-3"/>
+                 </span> 
               </Button>
             </div>
           </div>
@@ -262,7 +264,7 @@ const TaskTable = (props) => {
             <Form.Group controlId="custom-select" className="mb-3">
               <Form.Label>Select Category</Form.Label>
               <Form.Control as="select" className="" value={newTask.category}>
-                <option className="d-none">Select Category</option>
+                <option className="">Select Category</option>
                 {[
                   "Carpet Cleaning",
                   "Cleaning",
