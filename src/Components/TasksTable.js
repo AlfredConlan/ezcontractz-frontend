@@ -24,7 +24,8 @@ const TaskTable = (props) => {
 
   tasksRef.current = tasks;
 
-  //Declaring variables for newTask modal
+  //Setting user
+  const { user } = useAuth0();
 
   //Declaring variables for newTask modal
 
@@ -59,7 +60,7 @@ const TaskTable = (props) => {
     retrieveTasks();
   };
 
-  const { user } = useAuth0();
+ 
 
   useEffect(() => {
     
@@ -91,16 +92,6 @@ const TaskTable = (props) => {
 
     retrieveTasks();
   }, []);
-
-  const findByTitle = () => {
-    tasks.findByTitle(tasks)
-      .then((response) => {
-        setTasks(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
   const searchCriteria = tasks.filter(task => task.taskName.includes(searchTasks))
 
@@ -310,7 +301,7 @@ const TaskTable = (props) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className="ms-4">
               ADD TASK
             </Button>
           </Form>
