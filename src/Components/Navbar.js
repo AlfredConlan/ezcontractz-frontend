@@ -10,7 +10,7 @@ import AuthenticationButton from "./AuthenticationButton";
 function NavBar() {
   return (
     <div>
-      <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="sm" className="blue-background" variant="dark">
         <Navbar.Brand href="/home" className="ms-5">
           <img src={logo} alt="logo" />
         </Navbar.Brand>
@@ -18,19 +18,19 @@ function NavBar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
             <Nav>
-              <Link to="/tasks" style={{ textDecoration: "none" }} className="nav-link">
+              <Link to="/tasks" style={{ textDecoration: "none" }} className="nav-link text-white">
                 Tasks
               </Link>
-              <Link to="/contractor-search" style={{ textDecoration: "none" }} className="nav-link">
+              <Link to="/contractor-search" style={{ textDecoration: "none" }} className="nav-link text-white">
                 ContractorSearch
               </Link>
-              <Link to="/admin" style={{ textDecoration: "none" }} className="nav-link">
+              <Link to="/admin" style={{ textDecoration: "none" }} className="nav-link text-white">
                 Admin
               </Link>
-              <Link to="/profile" style={{ textDecoration: "none" }} className="nav-link">
+              <Link to="/profile" style={{ textDecoration: "none" }} className="nav-link text-white">
                 Profile
               </Link>
-              <Link to="/aboutus" style={{ textDecoration: "none" }} className="nav-link">
+              <Link to="/aboutus" style={{ textDecoration: "none" }} className="nav-link text-white">
                 About Us
               </Link>
               <AuthenticationButton />

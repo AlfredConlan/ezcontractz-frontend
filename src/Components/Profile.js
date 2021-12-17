@@ -48,18 +48,18 @@ const Profile = () => {
   return (
     <div className="container">
       <div>
-        <h1 className="text-center p-4 text-white">Profile</h1>
+        <h1 className="text-center p-4 blue-text">Profile</h1>
       </div>
       <div className="row align-items-center profile-header mt-lg-3">
-        <div className=" container col-md-6 text-start text-md-center">
-          <img id="userImage" src="" alt="Profile" className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
-          <p id="userFirstName" className=""></p>
-          <p id="userLastName" className=""></p>
-          <p id="userEmail" className=""></p>
-          <p id="userUserName" className=""></p>
-          <p id="userLocation" className=""></p>
-        </div>
+        {/* <div className=" container col-md-6 text-start text-md-center"> */}
+        <img id="userImage" src="" alt="Profile" className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
+        <div id="userFirstName" className=""></div>
+        <p id="userLastName" className=""></p>
+        <p id="userEmail" className=""></p>
+        <p id="userUserName" className=""></p>
+        <p id="userLocation" className=""></p>
       </div>
+      {/* </div> */}
       {/* <div className="row">
         <pre className="col-12 text-light bg-dark p-4">{JSON.stringify(user, null, 2)}</pre>
       </div> */}
