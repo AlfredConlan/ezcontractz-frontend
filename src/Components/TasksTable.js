@@ -179,12 +179,12 @@ const TaskTable = (props) => {
           return (
             <div>
               <span onClick={() => openTasks(rowIdx)}>
-                <Pencil className="far fa-edit action mr-2" />
+                <Pencil className="far fa-edit action ms-2 xl"/>
               </span>
               <span onClick={() => {
                 deleteTasks(rowIdx)
               }}>
-                <Trash className="bi bi-trash ms-3" />
+                <Trash className="bi bi-trash ms-2 xxl" fill="red"/>
               </span>
             </div>
           );
@@ -298,12 +298,14 @@ const TaskTable = (props) => {
               <Form.Label>Max Budget</Form.Label>
               <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)" onChange={(e) => onInputChange(e)} />
             </Form.Group>
+            <Form.Group>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" type="submit" className="ms-4">
+            <Button variant="primary" type="submit" className="pe-4">
               ADD TASK
             </Button>
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
