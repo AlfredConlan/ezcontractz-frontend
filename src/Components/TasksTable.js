@@ -102,6 +102,8 @@ const TaskTable = (props) => {
       });
   };
 
+  const searchCriteria = tasks.filter(task => task.taskName.includes(searchTasks))
+
   const openTasks = (rowIndex) => {
     const id = tasks.current[rowIndex].id;
 
@@ -191,7 +193,7 @@ const TaskTable = (props) => {
               <span onClick={() => {
                 deleteTasks(rowIdx)
               }}>
-                <Trash className="bi bi-trash" />
+                <Trash className="bi bi-trash ms-3" />
               </span>
             </div>
           );
@@ -203,7 +205,7 @@ const TaskTable = (props) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data: tasks,
+    data: searchCriteria ? searchCriteria :  tasks,
   });
 
   return (
@@ -211,15 +213,12 @@ const TaskTable = (props) => {
       <div className="list row">
         <div className="col-md-8 container">
           <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Search by title" value={searchTasks} onChange={onChangeSearchTasks} />
+            <input type="text" className="form-control me-2" placeholder="Search by Task Name Here" value={searchTasks} onChange={onChangeSearchTasks} />
             <div className="input-group-append">
-              <button className="btn btn-outline-secondary btnOrange" type="button" onClick={findByTitle}>
-                Search
-              </button>
-              <Button variant="primary" className="btn btn-success ml-5" onClick={handleShow}>
+              <Button variant="primary" className="btn btnOrange ps-1" onClick={handleShow}>
                 Add Task
-               <span className="ml-2">
-                 <PlusCircleFill className="mb-1 pl-3"/>
+               <span className="ml-3">
+                 <PlusCircleFill className="mb-1 ms-2"/>
                  </span> 
               </Button>
             </div>
@@ -251,6 +250,8 @@ const TaskTable = (props) => {
           </table>
         </div>
       </div>
+      
+
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>ADD A TASK!</Modal.Title>
@@ -264,7 +265,7 @@ const TaskTable = (props) => {
             <Form.Group controlId="custom-select" className="mb-3">
               <Form.Label>Select Category</Form.Label>
               <Form.Control as="select" className="" value={newTask.category}>
-                <option className="">Select Category</option>
+                <option className="d-none">Select Category</option>
                 {[
                   "Carpet Cleaning",
                   "Cleaning",
