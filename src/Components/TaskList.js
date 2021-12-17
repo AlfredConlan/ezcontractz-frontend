@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 const TaskList = () => {
   const { user } = useAuth0();
+
   useEffect(() => {
     if (user) {
       const { email } = user;
@@ -23,14 +24,14 @@ const TaskList = () => {
               console.log("The response is: ", response);
               localStorage.setItem("UserName", response[0].userName);
               console.log("Username is: ", localStorage.getItem("UserName"));
-            } else {
+               } else {
               console.log("Response is empty");
-              document.location.replace("http://localhost:3000/registration");
+                 document.location.replace("http://localhost:3000/registration");
             }
           });
       }
     }
-  }, []);
+  }, [user]);
 
   return (
     <div>
