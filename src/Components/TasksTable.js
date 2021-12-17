@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo, useRef,} from "react";
+import React, { useState, useEffect, useMemo, useRef, } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Trash, Pencil, PlusCircleFill} from "react-bootstrap-icons";
+import { Trash, Pencil, PlusCircleFill } from "react-bootstrap-icons";
 import "./styles.css";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
@@ -20,6 +20,7 @@ const TaskTable = (props) => {
     maxBudget: "",
     category: "",
     assignedContractor: "",
+    date: "",
   });
 
   tasksRef.current = tasks;
@@ -56,14 +57,13 @@ const TaskTable = (props) => {
       });
   };
 
+  //Refreshing the task list 
   const refreshList = () => {
     retrieveTasks();
   };
 
- 
 
   useEffect(() => {
-    
     if (user) {
       const { email } = user;
       if (email) {
@@ -106,12 +106,12 @@ const TaskTable = (props) => {
     const id = tasksRef.current[rowIndex].id;
     console.log(tasksRef.current[rowIndex].id);
     axios.delete("https://ezcontractz-backend.herokuapp.com/tasks/delete/" + id).then((resp) => {
-        console.log(resp)
-        refreshList();
-        // if (resp.data.userDeleted){
-        //   setTriggerUseEffect(triggerUseEffect+1)
-        // }
-      })
+      console.log(resp)
+      refreshList();
+      // if (resp.data.userDeleted){
+      //   setTriggerUseEffect(triggerUseEffect+1)
+      // }
+    })
   };
 
   // Function to submit task via the modal
@@ -137,6 +137,7 @@ const TaskTable = (props) => {
       .then((response) => response.json())
       .then((data) => console.log(data))
       .then((resp) => {
+        console.log(resp);
         refreshList();
         handleClose();
       });
@@ -144,10 +145,6 @@ const TaskTable = (props) => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: "ID",
-        accessor: "id",
-      },
       {
         Header: "Task Name",
         accessor: "taskName",
@@ -164,9 +161,13 @@ const TaskTable = (props) => {
         Header: "Assigned Contractor",
         accessor: "assignedContractor",
       },
+      // {
+      //   Header: "Scheduled",
+      //   accessor: "scheduled",
+      // },
       {
-        Header: "Scheduled",
-        accessor: "scheduled",
+        Header: "Date",
+        accessor: "date",
       },
       {
         Header: "Max Budget",
@@ -179,13 +180,15 @@ const TaskTable = (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span onClick={() => openTasks(rowIdx)}>
-                <Pencil className="far fa-edit action ms-2 xl"/>
+              <span
+              // onClick={() => handleShowEdit(rowIdx)}
+              >
+                <Pencil className="far fa-edit action ms-2 xl" />
               </span>
               <span onClick={() => {
                 deleteTasks(rowIdx)
               }}>
-                <Trash className="bi bi-trash ms-2 xxl" fill="red"/>
+                <Trash className="bi bi-trash ms-2 xxl" fill="red" />
               </span>
             </div>
           );
@@ -197,7 +200,7 @@ const TaskTable = (props) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data: searchCriteria ? searchCriteria :  tasks,
+    data: searchCriteria ? searchCriteria : tasks,
   });
 
   return (
@@ -209,9 +212,9 @@ const TaskTable = (props) => {
             <div className="input-group-append">
               <Button variant="primary" className="btn btnOrange ps-1" onClick={handleShow}>
                 Add Task
-               <span className="ml-3">
-                 <PlusCircleFill className="mb-1 ms-2"/>
-                 </span> 
+                <span className="ml-3">
+                  <PlusCircleFill className="mb-1 ms-2" />
+                </span>
               </Button>
             </div>
           </div>
@@ -242,7 +245,7 @@ const TaskTable = (props) => {
           </table>
         </div>
       </div>
-      
+
 
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
@@ -290,6 +293,10 @@ const TaskTable = (props) => {
                 onChange={(e) => onInputChange(e)}
               />
             </Form.Group>
+            <Form.Group controlId="date">
+              <Form.Label>Select Date</Form.Label>
+              <Form.Control type="date" name="date" value={newTask.scheduled} placeholder="Schedule Date" onChange={(e) => onInputChange(e)} />
+            </Form.Group>
             {/* <Form.Group className="mb-3" controlId="scheduled">
               <Form.Label>Scheduled</Form.Label>
               <Form.Control type="scheduled" value={newTask.scheduled} name="scheduled" placeholder="Scheduled"
@@ -300,12 +307,12 @@ const TaskTable = (props) => {
               <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)" onChange={(e) => onInputChange(e)} />
             </Form.Group>
             <Form.Group>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit" className="pe-4">
-              ADD TASK
-            </Button>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" type="submit" className="pe-4">
+                ADD TASK
+              </Button>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -316,6 +323,7 @@ const TaskTable = (props) => {
                     <Button variant="primary" type="submit" >ADD TASK</Button> */}
         </Modal.Footer>
       </Modal>
+
     </div>
   );
 };
