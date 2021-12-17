@@ -20,6 +20,15 @@ export default function AboutUs() {
               <EnvelopeFill size={40} className="p-1" />
               <Github size={40} className="p-1" />
               <Linkedin size={36} className="p-1" />
+              {/* <a href="mailto: alfred.h.conlan@gmail.com" target="_blank" rel="noreferrer">
+                <EnvelopeFill size={40} className="p-1" />
+              </a>
+              <a href="https://github.com/AlfredConlan" target="_blank" rel="noreferrer">
+                <Github size={40} className="p-1" />
+              </a>
+              <a href="https://www.linkedin.com/in/alconlan/" target="_blank" rel="noreferrer">
+                <Linkedin size={36} className="p-1" />
+              </a> */}
             </div>
           </div>
         </div>
@@ -32,6 +41,15 @@ export default function AboutUs() {
               <EnvelopeFill size={40} className="p-1" />
               <Github size={40} className="p-1" />
               <Linkedin size={36} className="p-1" />
+              {/* <a href="mailto: alfred.h.conlan@gmail.com" target="_blank" rel="noreferrer">
+                <EnvelopeFill size={40} className="p-1" />
+              </a>
+              <a href="https://github.com/AlfredConlan" target="_blank" rel="noreferrer">
+                <Github size={40} className="p-1" />
+              </a>
+              <a href="https://www.linkedin.com/in/alconlan/" target="_blank" rel="noreferrer">
+                <Linkedin size={36} className="p-1" />
+              </a> */}
             </div>
           </div>
         </div>
@@ -41,9 +59,15 @@ export default function AboutUs() {
             <div className="card-body info">
               <h4 className="card-title">Al Conlan</h4>
               <p className="card-text">Full-Stack Web Developer with DigitalCrafts</p>
-              <EnvelopeFill size={40} className="p-1" />
-              <Github size={40} className="p-1" />
-              <Linkedin size={36} className="p-1" />
+              <a href="mailto: alfred.h.conlan@gmail.com" target="_blank" rel="noreferrer">
+                <EnvelopeFill size={40} className="p-1" />
+              </a>
+              <a href="https://github.com/AlfredConlan" target="_blank" rel="noreferrer">
+                <Github size={40} className="p-1" />
+              </a>
+              <a href="https://www.linkedin.com/in/alconlan/" target="_blank" rel="noreferrer">
+                <Linkedin size={36} className="p-1" />
+              </a>
             </div>
           </div>
         </div>
