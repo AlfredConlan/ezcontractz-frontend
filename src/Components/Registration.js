@@ -92,7 +92,7 @@ function Registration() {
             }}
           >
             <div className="mb-3 text-start">
-              <h1 className="text-center p-4 text-primary">Edit Your Profile</h1>
+              <h1 className="text-center p-4 blue-text">Your Profile</h1>
               <label for="InputFirstName" className="form-label">
                 First Name
               </label>
