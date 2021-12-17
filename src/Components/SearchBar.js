@@ -20,7 +20,7 @@ export default function SearchBar() {
   //Note: Typically, a form refreshes on submit, so you have to put in the prevent default so it doesn't. Line 26)
   return (
     <div className="SearchBar">
-      <h6>Select the Cateogry and enter your Zip Code to find a contractor in your area.</h6>
+      <h4>Select the Cateogry and enter your Zip Code to find a contractor in your area.</h4>
       <br></br>
       <Form
         onSubmit={(e) => {
@@ -133,7 +133,7 @@ export default function SearchBar() {
                   <Card.Text>
                     <h6>Rating:</h6> <h6>{contractor.rating}</h6>
                   </Card.Text>
-                  <Button variant="primary" onClick={() => handleShow(contractor)}>
+                  <Button variant="primary" classname="assignCButton" onClick={() => handleShow(contractor)}>
                     Assign Contractor
                   </Button>
                   {/* //------------------------------------Modal to assign Contractor(working shell with contractor info--------------------------------// */}

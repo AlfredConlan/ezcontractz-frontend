@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../Assets/img/logo.png";
+import './Grid.css';
 
 //Import Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,7 +11,7 @@ import AuthenticationButton from "./AuthenticationButton";
 function NavBar() {
   return (
     <div>
-      <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="sm" className="navbarbg" variant="dark">
         <Navbar.Brand href="/home" className="ms-5">
           <img src={logo} alt="logo" />
         </Navbar.Brand>
@@ -18,7 +19,7 @@ function NavBar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
             <Nav>
-              <Link to="/tasks" style={{ textDecoration: "none" }} className="nav-link">
+              <Link to="/tasks" style={{ textDecoration: "none"}} className="nav-link">
                 Tasks
               </Link>
               <Link to="/contractor-search" style={{ textDecoration: "none" }} className="nav-link">

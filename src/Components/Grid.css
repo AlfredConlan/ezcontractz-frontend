@@ -14,14 +14,36 @@
 .contractorCard{
     margin: 20px;
 }
+h1{
+    color:#203864;
+}
+h4{
+    color:#203864
+}
 
 h6{
-    color:black
+    color:black;
+}
+
+.mb-2{
+   background-color:#C55A11; 
+   
 }
 
 /*------------------Search Bar-------------------*/
 .SearchBar {
-    align-items: center;
+    align-items:center !important; 
     margin:40px;
+}
+
+.nav-link:hover {
+    background-color:#BF9000 !important;
+}
+
+.navbarbg{
+    background-color: #203864;
+}
+.assignCButton{
+    color: #BF9000 !important;
 }
 

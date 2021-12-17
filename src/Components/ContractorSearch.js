@@ -5,7 +5,7 @@ function ContractorSearch() {
   return (
     <div>
       <div>
-        <h1 className="text-center p-4 text-white">Contractor Search</h1>
+        <h1 className="text-center p-4 text-#203864">Contractor Search</h1>
       </div>
       <SearchBar />
     </div>
