@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Trash, Pencil, PlusCircleFill} from "react-bootstrap-icons";
 import "./styles.css";
 import axios from "axios";
-import { Modal, Button, Form, Add } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const TaskTable = (props) => {
@@ -93,6 +93,7 @@ const TaskTable = (props) => {
     retrieveTasks();
   }, []);
 
+  //Search Bar
   const searchCriteria = tasks.filter(task => task.taskName.includes(searchTasks))
 
   const openTasks = (rowIndex) => {
