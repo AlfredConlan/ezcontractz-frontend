@@ -31,14 +31,23 @@ export default function SearchBar() {
       })
     }
   const assignContractor = () => {
-    fetch(`https://backend.ezcontractz.herokuapp.com/tasks/${taskName}`, {
+    const filteredTask = (tasks.filter(task=>task.taskName === taskName));      
+    console.log(filteredTask);
+    fetch(`https://ezcontractz-backend.herokuapp.com/tasks/update/${taskName}`, {
             method: "PUT",
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              assignedContractor
+              userName: filteredTask.userName,
+              taskName: filteredTask.taskName,
+              category: filteredTask.category,
+              description: filteredTask.description,
+              assignedContractor: modalData.name,
+              scheduled: filteredTask.scheduled,
+              date: filteredTask.date,
+              maxBudget: filteredTask.maxBudget,
             }),
           })
             .then((res) => res.json())
@@ -46,8 +55,7 @@ export default function SearchBar() {
               if (data.error) {
                 alert(data.error);
               } else {
-                console.log(data);
-                setBusinessInfo(data.businesses);
+                alert("Your contractor was assigned")
               }
             });
   }
@@ -151,7 +159,7 @@ export default function SearchBar() {
         {businessInfo.map((contractor, index) => {
           return (
             <div key={index} className="contractorCard">
-              <Card style={{ width: "26rem" }}>
+              <Card style={{ width: "28rem" }}>
                 <Card.Img variant="top" height="335px" width="25px" src={contractor.image_url} />
                 <Card.Body>
                   <Card.Text>
@@ -192,12 +200,12 @@ export default function SearchBar() {
 
                     <Modal.Body>
 {/*------------------------------------------------ Dropdown menu that contains user tasks --------------------------*/}
-                    <Dropdown>
-                      <Dropdown.Toggle onChange={(e) =>setTaskName(e)}>Select the task to assign to this contractor.</Dropdown.Toggle>
+                    <Dropdown onSelect={(e) => setTaskName(e)}>
+                      <Dropdown.Toggle >Select the task to assign to this contractor.</Dropdown.Toggle>
                         <Dropdown.Menu show> {
                         tasks.map((task, index) => { 
                         return(   <div key={index}>           
-                          <Dropdown.Item eventKey="1">{task.taskName}</Dropdown.Item>
+                          <Dropdown.Item eventKey={task.taskName}>{task.taskName}</Dropdown.Item>
                           <Dropdown.Divider /> 
                           </div>    
                         )          
