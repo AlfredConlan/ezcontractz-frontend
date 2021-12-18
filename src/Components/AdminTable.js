@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef, setState } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles.css";
 import { Trash, Pencil } from "react-bootstrap-icons";
 import axios from "axios";
 // const user = require("../models/users");
@@ -31,6 +32,9 @@ const AdminTable = (props) => {
         console.log(users);
       });
   };
+
+  // Search Bar Functionality
+  const searchCriteria = users.filter(user => user.userName.includes(searchUsers))
 
   const refreshList = () => {
     retrieveUsers();
@@ -101,14 +105,14 @@ const AdminTable = (props) => {
           return (
             <div className="grid">
               <span onClick={() => openUsers(rowIdx)}>
-                <Pencil className="far fa-edit action mr-2" />
+                <Pencil className="far fa-edit action ms-2 xl" />
               </span>
               <span
                 onClick={() => {
                   deleteUsers(rowIdx);
                 }}
               >
-                <Trash className="bi bi-trash" />
+                <Trash className="bi bi-trash ms-2 xxl" fill="red"/>
               </span>
             </div>
           );
@@ -120,7 +124,7 @@ const AdminTable = (props) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data: users,
+    data:  searchCriteria ? searchCriteria :  users,
   });
 
   return (
