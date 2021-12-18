@@ -1,5 +1,6 @@
 import "./Registration.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 function Registration() {
   const { user } = useAuth0();
@@ -29,7 +30,6 @@ function Registration() {
       })
       .then((res) => {
         let user_name = localStorage.getItem("UserName");
-        console.log("Username is: " + user_name);
         if (user_name === "No One" || user_name === null) {
           return;
         } else {
@@ -66,7 +66,6 @@ function Registration() {
       document.getElementById("InputZip").focus();
       return false;
     } else if (document.getElementById("InputZip").value.length !== 5) {
-      console.log(document.getElementById("InputZip").value.length);
       alert("Zip Code must be 5 digits!");
       document.getElementById("InputZip").focus();
       return false;
@@ -83,47 +82,39 @@ function Registration() {
   // function convertPhoto(e) {
   //   e.preventDefault();
 
-  //   console.log("Before conversion", document.getElementById("InputImage").value);
-
   //   let photo = document.getElementById("InputImage").value;
-
-  //   console.log("photo is: ", photo);
 
   //   uploadPhoto(photo);
   // }
 
-  function convertPhoto(element) {
-    if (element.target.files) {
-      var file = element.files[0];
+  function encodeImageFileAsURL(fileData) {
+    alert(fileData);
+    if (fileData) {
       var reader = new FileReader();
       reader.onloadend = function () {
-        console.log("RESULT", reader.result);
+        uploadPhoto(reader.result.substring("data:image/png;base64,".length).trim());
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(fileData);
     }
-
-    // uploadPhoto(file);
   }
 
   function uploadPhoto(photo) {
-    fetch("http://freeimage.host/api/1/upload/?key=6d207e02198a847aa98d0a2a901485a5&source=" + photo + "&format=json", {
-      method: "POST",
-      // mode: "cors",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
-        // "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      //   // Accept: "application/json",
-      //   // "Content-Type": "application/json",
-      // },
-    })
+    // const data = new FormData();
+    // data.append("source", photo);
+    axios
+      .post(
+        "http://localhost:3001/image-upload",
+
+        // body: data,
+        { source: photo },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       // .then((res) => res.json())
-      .then((res) => {
-        console.log("response from freeimage: ", res);
-      });
+      .then((res) => {});
     // .then((res) => {
 
     // });
@@ -169,7 +160,7 @@ function Registration() {
             <label htmlFor="InputImage" className="form-label">
               Profile Photo
             </label>
-            <input type="file" onChange={(e) => convertPhoto(this)} />
+            <input type="file" onChange={(e) => encodeImageFileAsURL(e.target.files[0])} />{" "}
           </div>
           {/* <div className="mb-3 text-start">
               <label htmlFor ="InputPassword" className="form-label">

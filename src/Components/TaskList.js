@@ -19,13 +19,9 @@ const TaskList = () => {
         })
           .then((response) => response.json())
           .then((response) => {
-            console.log("Response.length = ", response.length);
             if (response.length !== 0) {
-              console.log("The response is: ", response);
               localStorage.setItem("UserName", response[0].userName);
-              console.log("Username is: ", localStorage.getItem("UserName"));
             } else {
-              console.log("Response is empty");
               // document.location.replace("http://localhost:3000/registration");
             }
           });
@@ -36,7 +32,7 @@ const TaskList = () => {
   return (
     <div>
       <div className="profileHouseSection">
-        <h1 className="text-center p-4 blue-text display-3">Your Tasks</h1>
+        <h1 className="text-center p-4 blue-text">Your Tasks</h1>
       </div>
       <div className="taskList">
         <TaskTable />

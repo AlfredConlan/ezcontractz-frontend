@@ -21,14 +21,11 @@ const Profile = () => {
       })
         .then((response) => response.json())
         .then((response) => {
-          // console.log(response.status);
           if (response.length !== 0) {
             //
             // setState for user image
-            // console.log("image is :", response[0].userImage.toString("base64"));
             // this.setState({ data: response[0].userImage.toString("base64") });
 
-            console.log("The response is: ", response);
             // const Image = document.getElementById("userImage");
             const FirstName = document.getElementById("userFirstName");
             const LastName = document.getElementById("userLastName");
@@ -59,7 +56,7 @@ const Profile = () => {
         <div className=" container col-md-6 text-start text-md-center">
           <div className="card w-50 ms-auto me-auto">
             <div className="card-body">
-              <img src="" id="userImage" alt="profile" className="card-img-top rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
+              {/* <img src="" id="userImage" alt="profile" className="card-img-top rounded-circle img-fluid profile-picture mb-3 mb-md-0" /> */}
               <p id="userFirstName" className="card-text"></p>
               <p id="userLastName" className="card-text"></p>
               <p id="userEmail" className="card-text"></p>

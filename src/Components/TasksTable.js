@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo, useRef } from "react";
 
 import { useTable } from "react-table";
@@ -50,20 +49,17 @@ const TaskTable = (props) => {
   // Fetching tasks from database - NEED TO UPDATE TO TARGET BASED ON USER NAME
   const retrieveTasks = () => {
     const user_name = localStorage.getItem("UserName");
-    console.log(user_name);
     fetch("https://backend.ezcontractz.com/tasks/" + user_name)
       .then((resp) => resp.json())
       .then((resp) => {
         setTasks(resp);
-        console.log(resp);
       });
   };
 
-  //Refreshing the task list 
+  //Refreshing the task list
   const refreshList = () => {
     retrieveTasks();
   };
-
 
   useEffect(() => {
     if (user) {
@@ -79,13 +75,9 @@ const TaskTable = (props) => {
         })
           .then((response) => response.json())
           .then((response) => {
-            console.log("Response.length = ", response.length);
             if (response.length !== 0) {
-              console.log("The response is: ", response);
               localStorage.setItem("UserName", response[0].userName);
-              console.log("Username is: ", localStorage.getItem("UserName"));
               // } else {
-              console.log("Response is empty");
               //   document.location.replace("http://localhost:3000/registration");
             }
           });
@@ -95,10 +87,8 @@ const TaskTable = (props) => {
     retrieveTasks();
   }, [user]);
 
-
   //Search Bar
-  const searchCriteria = tasks.filter(task => task.taskName.includes(searchTasks))
-
+  const searchCriteria = tasks.filter((task) => task.taskName.includes(searchTasks));
 
   const openTasks = (rowIndex) => {
     const id = tasks.current[rowIndex].id;
@@ -108,19 +98,12 @@ const TaskTable = (props) => {
 
   const deleteTasks = (rowIndex) => {
     const id = tasksRef.current[rowIndex].id;
-    console.log(tasksRef.current[rowIndex].id);
     axios.delete("https://ezcontractz-backend.herokuapp.com/tasks/delete/" + id).then((resp) => {
-
-
-      console.log(resp)
-
       refreshList();
       // if (resp.data.userDeleted){
       //   setTriggerUseEffect(triggerUseEffect+1)
       // }
-
-    })
-
+    });
   };
 
   // Function to submit task via the modal
@@ -144,9 +127,7 @@ const TaskTable = (props) => {
     };
     fetch("https://ezcontractz-backend.herokuapp.com/tasks", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data))
       .then((resp) => {
-        console.log(resp);
         refreshList();
         handleClose();
       });
@@ -195,11 +176,12 @@ const TaskTable = (props) => {
                 <Pencil className="far fa-edit action ms-2 xl" />
               </span>
 
-              <span onClick={() => {
-                deleteTasks(rowIdx)
-              }}>
+              <span
+                onClick={() => {
+                  deleteTasks(rowIdx);
+                }}
+              >
                 <Trash className="bi bi-trash ms-2 xxl" fill="red" />
-
               </span>
             </div>
           );
@@ -223,10 +205,8 @@ const TaskTable = (props) => {
             <div className="input-group-append">
               <Button variant="primary" className="btn btnOrange ps-1" onClick={handleShow}>
                 Add Task
-
                 <span className="ml-3">
                   <PlusCircleFill className="mb-1 ms-2" />
-
                 </span>
               </Button>
             </div>
@@ -258,7 +238,6 @@ const TaskTable = (props) => {
           </table>
         </div>
       </div>
-
 
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
@@ -336,7 +315,6 @@ const TaskTable = (props) => {
                     <Button variant="primary" type="submit" >ADD TASK</Button> */}
         </Modal.Footer>
       </Modal>
-
     </div>
   );
 };
