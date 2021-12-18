@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Row, Col, Form, Button, InputGroup, FormControl, Card, Modal, Dropdown } from "react-bootstrap";
 import "./Grid.css";
 
-
 export default function SearchBar() {
   const [businessInfo, setBusinessInfo] = useState([]);
   const [location, setLocation] = useState("");
@@ -15,20 +14,19 @@ export default function SearchBar() {
     setmodalData(contractor);
     usertask();
   };
-  const [tasks, setTasks] = useState([]); 
-  const [assignedContractor,setAssignedContractor] = useState("")
-  const usertask =() => {
+  const [tasks, setTasks] = useState([]);
+  const [assignedContractor, setAssignedContractor] = useState("");
+  const usertask = () => {
     fetch(`https://ezcontractz-backend.herokuapp.com/tasks/${localStorage.getItem("UserName")}`)
       .then((res) => res.json())
       .then((data) => {
-          if (data.error) {
-            alert(data.error);
-          } else {
-            console.log(data);
-            setTasks(data);
-          }        
-      })
-    }
+        if (data.error) {
+          alert(data.error);
+        } else {
+          setTasks(data);
+        }
+      });
+  };
   // const [task, setTask] = useState([]);
   // ----------------------------------------------------Fetch on Submit--------------------------------------------------------------//
   //Note: Typically, a form refreshes on submit, so you have to put in the prevent default so it doesn't. Line 26)
@@ -55,14 +53,13 @@ export default function SearchBar() {
               if (data.error) {
                 alert(data.error);
               } else {
-                console.log(data);
                 setBusinessInfo(data.businesses);
               }
             });
         }}
       >
         <Row className="align-items-center">
-{/* //------------------------------------------------------------Category Input---------------------------------------------// */}
+          {/* //------------------------------------------------------------Category Input---------------------------------------------// */}
           <Col xs="auto">
             <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
               Category
@@ -96,7 +93,7 @@ export default function SearchBar() {
               </select>
             </InputGroup>
           </Col>
-{/* //--------------------------------------------------Location Input (included validation)----------------------------------// */}
+          {/* //--------------------------------------------------Location Input (included validation)----------------------------------// */}
           <Col xs="auto">
             <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
               Location
@@ -116,7 +113,7 @@ export default function SearchBar() {
               />
             </InputGroup>
           </Col>
-{/* //------------------------------------------------------Search Button with Fetch-----------------------------------------// */}
+          {/* //------------------------------------------------------Search Button with Fetch-----------------------------------------// */}
           <Col xs="auto">
             <Button type="submit" className="mb-2">
               Search
@@ -124,7 +121,7 @@ export default function SearchBar() {
           </Col>
         </Row>
       </Form>
-{/* //-----------------------------------------Map through results and populate card-----------------------------------------// */}
+      {/* //-----------------------------------------Map through results and populate card-----------------------------------------// */}
       <div className="contractorGrid">
         {" "}
         {businessInfo.map((contractor, index) => {
@@ -150,7 +147,7 @@ export default function SearchBar() {
                   <Button variant="primary" classname="assignCButton" onClick={() => handleShow(contractor)}>
                     Assign Contractor
                   </Button>
-{/* //-----------------------------Modal to assign Contractor(working shell with contractor info and user tasks-----*/}
+                  {/* //-----------------------------Modal to assign Contractor(working shell with contractor info and user tasks-----*/}
                   <Modal
                     show={show}
                     onHide={handleClose}
@@ -165,21 +162,22 @@ export default function SearchBar() {
                     </Modal.Header>
 
                     <Modal.Body></Modal.Body>
-{/*------------------------------------------------ Dropdown menu that contains user tasks --------------------------*/}
+                    {/*------------------------------------------------ Dropdown menu that contains user tasks --------------------------*/}
                     <Dropdown>
                       <Dropdown.Toggle>Select the task to assign to this contractor.</Dropdown.Toggle>
-                        <Dropdown.Menu show> {
-                        tasks.map((task, index) => { 
-                        return(   <div key={index}>           
-                          <Dropdown.Item eventKey="1">{task.taskName}</Dropdown.Item>
-                          <Dropdown.Divider /> 
-                          </div>    
-                        )          
-                      }         
-                    )
-                  }</Dropdown.Menu>
+                      <Dropdown.Menu show>
+                        {" "}
+                        {tasks.map((task, index) => {
+                          return (
+                            <div key={index}>
+                              <Dropdown.Item eventKey="1">{task.taskName}</Dropdown.Item>
+                              <Dropdown.Divider />
+                            </div>
+                          );
+                        })}
+                      </Dropdown.Menu>
                     </Dropdown>
-{/*------------------------------------------------End of Dropdown Menu---------------------------------------------*/}
+                    {/*------------------------------------------------End of Dropdown Menu---------------------------------------------*/}
                     <Modal.Footer>
                       <Button variant="secondary" onClick={handleClose}>
                         Assign
@@ -189,7 +187,7 @@ export default function SearchBar() {
                       </Button>
                     </Modal.Footer>
                   </Modal>
-{/*--------------------------------------------------End of Modal--------------------------------------------------- */}       
+                  {/*--------------------------------------------------End of Modal--------------------------------------------------- */}
                 </Card.Body>
               </Card>
             </div>

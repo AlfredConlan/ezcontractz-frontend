@@ -29,12 +29,11 @@ const AdminTable = (props) => {
       .then((resp) => resp.json())
       .then((resp) => {
         setUsers(resp);
-        console.log(users);
       });
   };
 
   // Search Bar Functionality
-  const searchCriteria = users.filter(user => user.userName.includes(searchUsers))
+  const searchCriteria = users.filter((user) => user.userName.includes(searchUsers));
 
   const refreshList = () => {
     retrieveUsers();
@@ -59,7 +58,6 @@ const AdminTable = (props) => {
   const deleteUsers = (rowIndex) => {
     const userName = usersRef.current[rowIndex].id;
     axios.delete("https://backend.ezcontractz.com/users/delete/" + userName).then((resp) => {
-      console.log(resp);
       refreshList();
       // if (resp.data.userDeleted){
       //   setTriggerUseEffect(triggerUseEffect+1)
@@ -112,7 +110,7 @@ const AdminTable = (props) => {
                   deleteUsers(rowIdx);
                 }}
               >
-                <Trash className="bi bi-trash ms-2 xxl" fill="red"/>
+                <Trash className="bi bi-trash ms-2 xxl" fill="red" />
               </span>
             </div>
           );
@@ -124,7 +122,7 @@ const AdminTable = (props) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data:  searchCriteria ? searchCriteria :  users,
+    data: searchCriteria ? searchCriteria : users,
   });
 
   return (

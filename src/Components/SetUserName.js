@@ -17,11 +17,8 @@
 //       })
 //         .then((response) => response.json())
 //         .then((response) => {
-//           console.log(response.status);
 //           if (response.status === 200) {
-//             console.log("The response is: ", response);
 //             localStorage.setItem("UserName", response[0].userName);
-//             console.log(localStorage.getItem("UserName"));
 //           } else {
 //             document.location.replace("https:/localhost:3000/registration");
 //           }
