@@ -1,8 +1,10 @@
 .contractorGrid{
-    margin:20px;
+    margin-left: 10%;
+    margin-right: 10%;
     display:flex;
-    align-content: center;
     flex-direction: row;
+    align-content: center;
+    align-items: center;;
     flex-wrap:wrap;
     border-radius:10px;
     overflow:hidden;
@@ -12,7 +14,16 @@
 }
 
 .contractorCard{
-    margin: 20px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+.contractorCard >div{
+    margin:20px;
+    
 }
 /* h1{
     color:#203864;
@@ -23,6 +34,7 @@ h4{
 
 h6{
     color:black;
+    font-size: larger;
 }
 
 /* .mb-2{
@@ -50,3 +62,11 @@ h6{
     color: #BF9000 !important;
 } */
 
+.modal-backdrop.fade{
+    opacity:0.05;
+    filter:alpha(opacity=0);
+}
+/* .modal-backdrop.fade.in {
+    opacity:0.5;
+    filter:alpha(opacity=20);
+} */

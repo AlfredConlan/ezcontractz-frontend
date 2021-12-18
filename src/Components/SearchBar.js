@@ -29,8 +29,28 @@ export default function SearchBar() {
           }        
       })
     }
+  const assignContractor = () => {
+    fetch(`https://backend.ezcontractz.herokuapp.com/tasks/id}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              assignedContractor
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.error) {
+                alert(data.error);
+              } else {
+                console.log(data);
+                setBusinessInfo(data.businesses);
+              }
+            });
+  }
   // const [task, setTask] = useState([]);
-
   // ----------------------------------------------------Fetch on Submit--------------------------------------------------------------//
   //Note: Typically, a form refreshes on submit, so you have to put in the prevent default so it doesn't. Line 26)
   return (
@@ -92,7 +112,7 @@ export default function SearchBar() {
                 <option value="painters">Painters</option>
                 <option value="pest_control">Pest Control</option>
                 <option value="plumbing">Plumbers</option>
-                <option value="homeservices">Roofing</option>
+                <option value="roofing_company">Roofing</option>
                 <option value="tvmounting">TV Mounting</option>
               </select>
             </InputGroup>
@@ -131,23 +151,28 @@ export default function SearchBar() {
         {businessInfo.map((contractor, index) => {
           return (
             <div key={index} className="contractorCard">
-              <Card style={{ width: "15rem" }}>
-                <Card.Img variant="top" height="165px" width="70px" src={contractor.image_url} />
+              <Card style={{ width: "26rem" }}>
+                <Card.Img variant="top" height="335px" width="25px" src={contractor.image_url} />
                 <Card.Body>
-                  <Card.Title>
-                    <h6>Name:</h6>
-                    <h6>{contractor.name}</h6>
-                  </Card.Title>
                   <Card.Text>
-                    <h6>Phone:</h6>
-                    <h6>{contractor.display_phone}</h6>
+                    <h6>Name: {contractor.name}</h6>
                   </Card.Text>
                   <Card.Text>
-                    <h6>Rating:</h6> <h6>{contractor.rating}</h6>
+                    <h6>Phone: {contractor.display_phone}</h6>
                   </Card.Text>
                   <Card.Text>
-                    <h6>Rating:</h6> <h6>{contractor.rating}</h6>
+                    <h6>Zip Code: {contractor.location.zip_code}</h6>
                   </Card.Text>
+                  <Card.Text>
+                    <h6>Rating: {contractor.rating}</h6>
+                  </Card.Text>
+                  <Card.Text>
+                    <h6>Review Count: {contractor.review_count}</h6>
+                  </Card.Text>
+                  
+                  {/* <Card.Text>
+                    <h6>Price:</h6> <h6>{contractor.price}</h6>
+                  </Card.Text> */}
                   <Button variant="primary" classname="assignCButton" onClick={() => handleShow(contractor)}>
                     Assign Contractor
                   </Button>
@@ -160,12 +185,12 @@ export default function SearchBar() {
                     modalData={modalData} //assigning a prop
                   >
                     <Modal.Header closeButton>
-                      <Modal.Title>{modalData.name}</Modal.Title>
-                      <Modal.Title>{modalData.display_phone}</Modal.Title>
+                      <Modal.Title>{ modalData.name }</Modal.Title><br></br>
+                      <Modal.Title>{ modalData.display_phone }</Modal.Title>
                       {/* <img src={modalData.image_url} height="30%" width="30%"/> */}
                     </Modal.Header>
 
-                    <Modal.Body></Modal.Body>
+                    <Modal.Body>
 {/*------------------------------------------------ Dropdown menu that contains user tasks --------------------------*/}
                     <Dropdown>
                       <Dropdown.Toggle>Select the task to assign to this contractor.</Dropdown.Toggle>
@@ -181,12 +206,20 @@ export default function SearchBar() {
                   }</Dropdown.Menu>
                     </Dropdown>
 {/*------------------------------------------------End of Dropdown Menu---------------------------------------------*/}
+                  </Modal.Body>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
                     <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
+                      <Button variant="secondary" onClick={assignContractor}>
                         Assign
                       </Button>
                       <Button variant="primary" onClick={handleClose}>
-                        Go to Task List
+                        Close
                       </Button>
                     </Modal.Footer>
                   </Modal>
