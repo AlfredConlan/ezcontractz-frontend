@@ -124,56 +124,50 @@ function Registration() {
       <div className="col-s-0 col-md-1 col-lg-4"></div>
       <div className="col">
         <div className="container border border-primary border-2 mt-5 bg-white loginBackground">
-          {/* <form autoComplete="off" className="pb-3 pt-3"> */}
-          <div className="mb-3 text-start">
-            <h1 className="text-center p-4 blue-text">Your Profile</h1>
-            <label htmlFor="InputFirstName" className="form-label">
-              First Name
-            </label>
-            <input type="text" className="form-control" id="InputFirstName" required defaultValue={given_name} />
-          </div>
-          <div className="mb-3 text-start">
-            <label htmlFor="InputLastName" className="form-label">
-              Last Name
-            </label>
-            <input type="text" className="form-control" id="InputLastName" required defaultValue={family_name} />
-          </div>
-          <div className="mb-3 text-start">
-            <label htmlFor="InputUserName" className="form-label">
-              Username - this is what other users will see
-            </label>
-            <input type="text" className="form-control" id="InputUserName" required />
-          </div>{" "}
-          <div className="mb-3 text-start">
-            <label htmlFor="InputEmail" className="form-label">
-              Email address
-            </label>
-            <input type="email" className="form-control" id="InputEmail" required defaultValue={email} />
-          </div>
-          <div className="mb-3 text-start">
-            <label htmlFor="InputZip" className="form-label">
-              Zip Code
-            </label>
-            <input type="text" className="form-control" id="InputZip" required />
-          </div>
-          <div className="mb-3 text-start">
-            <label htmlFor="InputImage" className="form-label">
-              Profile Photo
-            </label>
-            <input type="file" onChange={(e) => encodeImageFileAsURL(e.target.files[0])} />{" "}
-          </div>
-          {/* <div className="mb-3 text-start">
-              <label htmlFor ="InputPassword" className="form-label">
-                Password
+          <form autoComplete="off" className="pb-3 pt-3">
+            <div className="mb-3 text-start">
+              <h1 className="text-center p-4 blue-text">Your Profile</h1>
+              <label htmlFor="InputFirstName" className="form-label">
+                First Name
               </label>
-              <input type="password" className="form-control" id="InputPassword" required />
+              <input type="text" className="form-control" id="InputFirstName" required defaultValue={given_name} />
+            </div>
+            <div className="mb-3 text-start">
+              <label htmlFor="InputLastName" className="form-label">
+                Last Name
+              </label>
+              <input type="text" className="form-control" id="InputLastName" required defaultValue={family_name} />
+            </div>
+            <div className="mb-3 text-start">
+              <label htmlFor="InputUserName" className="form-label">
+                Username - this is what other users will see
+              </label>
+              <input type="text" className="form-control" id="InputUserName" required />
+            </div>{" "}
+            <div className="mb-3 text-start">
+              <label htmlFor="InputEmail" className="form-label">
+                Email address
+              </label>
+              <input type="email" className="form-control" id="InputEmail" required defaultValue={email} />
+            </div>
+            <div className="mb-3 text-start">
+              <label htmlFor="InputZip" className="form-label">
+                Zip Code
+              </label>
+              <input type="text" className="form-control" id="InputZip" required />
+            </div>
+            {/* <div className="mb-3 text-start">
+              <label htmlFor="InputImage" className="form-label">
+                Profile Photo
+              </label>
+              <input type="file" onChange={(e) => encodeImageFileAsURL(e.target.files[0])} />{" "}
             </div> */}
-          <div className="text-center">
-            {/* <button type="submit" className="btn btn-primary">
+            <div className="text-center">
+              <button type="submit" className="btn btn-primary">
                 Submit
-              </button> */}
-          </div>
-          {/* </form> */}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <div className="col-s-0 col-md-1 col-lg-4"></div>

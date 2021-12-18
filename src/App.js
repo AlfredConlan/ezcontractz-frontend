@@ -16,7 +16,7 @@ import Home from "./Components/Home";
 function App() {
   return (
     <Auth0ProviderWithHistory>
-      <Navbar />{" "}
+      <Navbar />
       <Switch>
         {/* UNCOMMENT THE SECTION BELOW TO ENABLE LOGIN/REGISTRATION */}
         {/*-------------------------------------------------------------*/}
