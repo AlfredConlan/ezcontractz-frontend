@@ -56,15 +56,19 @@ const Profile = () => {
         <h1 className="text-center p-4 blue-text">Profile</h1>
       </div>
       <div className="row align-items-center profile-header mt-lg-3">
-        {/* <div className=" container col-md-6 text-start text-md-center"> */}
-        <img id="userImage" src="" alt="Profile" className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
-        <div id="userFirstName" className=""></div>
-        <p id="userLastName" className=""></p>
-        <p id="userEmail" className=""></p>
-        <p id="userUserName" className=""></p>
-        <p id="userLocation" className=""></p>
+        <div className=" container col-md-6 text-start text-md-center">
+          <div className="card w-50 ms-auto me-auto">
+            <div className="card-body">
+              <img src="" id="userImage" alt="profile" className="card-img-top rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
+              <p id="userFirstName" className="card-text"></p>
+              <p id="userLastName" className="card-text"></p>
+              <p id="userEmail" className="card-text"></p>
+              <p id="userUserName" className="card-text"></p>
+              <p id="userLocation" className="card-text"></p>
+            </div>
+          </div>
+        </div>
       </div>
-      {/* </div> */}
       {/* <div className="row">
         <pre className="col-12 text-light bg-dark p-4">{JSON.stringify(user, null, 2)}</pre>
       </div> */}

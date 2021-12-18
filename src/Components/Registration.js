@@ -34,7 +34,7 @@ function Registration() {
           return;
         } else {
           alert("User was added");
-          document.location.replace("http://localhost:3000/tasks");
+          // document.location.replace("http://localhost:3000/tasks");
         }
       });
   }
