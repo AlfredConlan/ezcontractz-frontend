@@ -1,7 +1,7 @@
 // src/views/profile.js
 
 // import React from "react";
-import { useEffect } from "react";
+import { useEffect, setState } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -21,8 +21,13 @@ const Profile = () => {
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log(response.status);
+          // console.log(response.status);
           if (response.length !== 0) {
+            //
+            // setState for user image
+            // console.log("image is :", response[0].userImage.toString("base64"));
+            // this.setState({ data: response[0].userImage.toString("base64") });
+
             console.log("The response is: ", response);
             // const Image = document.getElementById("userImage");
             const FirstName = document.getElementById("userFirstName");
@@ -31,14 +36,14 @@ const Profile = () => {
             const UserName = document.getElementById("userUserName");
             const Location = document.getElementById("userLocation");
 
-            // Image.innerHTML = "<img src={`data:image/png;base64,${Buffer.from(this.state.data).toString('base64')}`} />";
+            // Image.innerHTML = "<img src={`data:image/jpeg;base64,${this.state.data}`} />";
             FirstName.innerHTML = "First Name: <h5>" + response[0].firstName + "</h5>";
             LastName.innerHTML = "Last Name: <h5>" + response[0].lastName + "</h5>";
             Email.innerHTML = "Email: <h5>" + response[0].email + "</h5>";
             UserName.innerHTML = "Username: <h5>" + response[0].userName + "</h5>";
             Location.innerHTML = "Location: <h5>" + response[0].location + "</h5>";
           } else {
-            document.location.replace("http://localhost:3000/registration");
+            // document.location.replace("http://localhost:3000/registration");
           }
         });
     })();

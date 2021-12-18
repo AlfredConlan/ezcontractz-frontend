@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useMemo, useRef, } from "react";
+
+import React, { useState, useEffect, useMemo, useRef } from "react";
+
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Trash, Pencil, PlusCircleFill } from "react-bootstrap-icons";
@@ -91,10 +93,12 @@ const TaskTable = (props) => {
     }
 
     retrieveTasks();
-  }, []);
+  }, [user]);
+
 
   //Search Bar
   const searchCriteria = tasks.filter(task => task.taskName.includes(searchTasks))
+
 
   const openTasks = (rowIndex) => {
     const id = tasks.current[rowIndex].id;
@@ -106,12 +110,17 @@ const TaskTable = (props) => {
     const id = tasksRef.current[rowIndex].id;
     console.log(tasksRef.current[rowIndex].id);
     axios.delete("https://ezcontractz-backend.herokuapp.com/tasks/delete/" + id).then((resp) => {
+
+
       console.log(resp)
+
       refreshList();
       // if (resp.data.userDeleted){
       //   setTriggerUseEffect(triggerUseEffect+1)
       // }
+
     })
+
   };
 
   // Function to submit task via the modal
@@ -185,10 +194,12 @@ const TaskTable = (props) => {
               >
                 <Pencil className="far fa-edit action ms-2 xl" />
               </span>
+
               <span onClick={() => {
                 deleteTasks(rowIdx)
               }}>
                 <Trash className="bi bi-trash ms-2 xxl" fill="red" />
+
               </span>
             </div>
           );
@@ -212,8 +223,10 @@ const TaskTable = (props) => {
             <div className="input-group-append">
               <Button variant="primary" className="btn btnOrange ps-1" onClick={handleShow}>
                 Add Task
+
                 <span className="ml-3">
                   <PlusCircleFill className="mb-1 ms-2" />
+
                 </span>
               </Button>
             </div>
