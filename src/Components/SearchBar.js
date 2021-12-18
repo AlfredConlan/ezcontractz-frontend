@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Row, Col, Form, Button, InputGroup, FormControl, Card, Modal, Dropdown } from "react-bootstrap";
 import "./Grid.css";
 
-
 export default function SearchBar() {
   const [businessInfo, setBusinessInfo] = useState([]);
   const [location, setLocation] = useState("");
@@ -17,6 +16,8 @@ export default function SearchBar() {
   };
   const [tasks, setTasks] = useState([]); 
   const [assignedContractor,setAssignedContractor] = useState("")
+  const [taskName,setTaskName] = useState("");
+  
   const usertask =() => {
     fetch(`https://ezcontractz-backend.herokuapp.com/tasks/${localStorage.getItem("UserName")}`)
       .then((res) => res.json())
@@ -30,7 +31,7 @@ export default function SearchBar() {
       })
     }
   const assignContractor = () => {
-    fetch(`https://backend.ezcontractz.herokuapp.com/tasks/id}`, {
+    fetch(`https://backend.ezcontractz.herokuapp.com/tasks/${taskName}`, {
             method: "PUT",
             credentials: "include",
             headers: {
@@ -76,7 +77,6 @@ export default function SearchBar() {
               if (data.error) {
                 alert(data.error);
               } else {
-                console.log(data);
                 setBusinessInfo(data.businesses);
               }
             });
@@ -193,7 +193,7 @@ export default function SearchBar() {
                     <Modal.Body>
 {/*------------------------------------------------ Dropdown menu that contains user tasks --------------------------*/}
                     <Dropdown>
-                      <Dropdown.Toggle>Select the task to assign to this contractor.</Dropdown.Toggle>
+                      <Dropdown.Toggle onChange={(e) =>setTaskName(e)}>Select the task to assign to this contractor.</Dropdown.Toggle>
                         <Dropdown.Menu show> {
                         tasks.map((task, index) => { 
                         return(   <div key={index}>           
