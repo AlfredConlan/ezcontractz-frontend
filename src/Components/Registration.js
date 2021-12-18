@@ -79,67 +79,110 @@ function Registration() {
       registerUser();
     }
   }
+
+  // function convertPhoto(e) {
+  //   e.preventDefault();
+
+  //   console.log("Before conversion", document.getElementById("InputImage").value);
+
+  //   let photo = document.getElementById("InputImage").value;
+
+  //   console.log("photo is: ", photo);
+
+  //   uploadPhoto(photo);
+  // }
+
+  function convertPhoto(element) {
+    if (element.target.files) {
+      var file = element.files[0];
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        console.log("RESULT", reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // uploadPhoto(file);
+  }
+
+  function uploadPhoto(photo) {
+    fetch("http://freeimage.host/api/1/upload/?key=6d207e02198a847aa98d0a2a901485a5&source=" + photo + "&format=json", {
+      method: "POST",
+      // mode: "cors",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+        // "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      //   // Accept: "application/json",
+      //   // "Content-Type": "application/json",
+      // },
+    })
+      // .then((res) => res.json())
+      .then((res) => {
+        console.log("response from freeimage: ", res);
+      });
+    // .then((res) => {
+
+    // });
+  }
   return (
     <div className="row showBackground">
       <div className="col-s-0 col-md-1 col-lg-4"></div>
       <div className="col">
         <div className="container border border-primary border-2 mt-5 bg-white loginBackground">
-          <form
-            autoComplete="off"
-            className="pb-3 pt-3"
-            onSubmit={(e) => {
-              validateRegistration(e);
-            }}
-          >
-            <div className="mb-3 text-start">
-              <h1 className="text-center p-4 blue-text">Your Profile</h1>
-              <label for="InputFirstName" className="form-label">
-                First Name
-              </label>
-              <input type="text" className="form-control" id="InputFirstName" required defaultValue={given_name} />
-            </div>
-            <div className="mb-3 text-start">
-              <label for="InputLastName" className="form-label">
-                Last Name
-              </label>
-              <input type="text" className="form-control" id="InputLastName" required defaultValue={family_name} />
-            </div>
-            <div className="mb-3 text-start">
-              <label for="InputUserName" className="form-label">
-                Username - this is what other users will see
-              </label>
-              <input type="text" className="form-control" id="InputUserName" required />
-            </div>{" "}
-            <div className="mb-3 text-start">
-              <label for="InputEmail" className="form-label">
-                Email address
-              </label>
-              <input type="email" className="form-control" id="InputEmail" required defaultValue={email} />
-            </div>
-            <div className="mb-3 text-start">
-              <label for="InputZip" className="form-label">
-                Zip Code
-              </label>
-              <input type="text" className="form-control" id="InputZip" required />
-            </div>
-            <div className="mb-3 text-start">
-              <label for="InputImage" className="form-label">
-                Profile Photo
-              </label>
-              <input type="file" name="UserPhoto" accept="image/*" className="form-control" id="InputImage" alt="Profile Image" required />
-            </div>
-            {/* <div className="mb-3 text-start">
-              <label for="InputPassword" className="form-label">
+          {/* <form autoComplete="off" className="pb-3 pt-3"> */}
+          <div className="mb-3 text-start">
+            <h1 className="text-center p-4 blue-text">Your Profile</h1>
+            <label htmlFor="InputFirstName" className="form-label">
+              First Name
+            </label>
+            <input type="text" className="form-control" id="InputFirstName" required defaultValue={given_name} />
+          </div>
+          <div className="mb-3 text-start">
+            <label htmlFor="InputLastName" className="form-label">
+              Last Name
+            </label>
+            <input type="text" className="form-control" id="InputLastName" required defaultValue={family_name} />
+          </div>
+          <div className="mb-3 text-start">
+            <label htmlFor="InputUserName" className="form-label">
+              Username - this is what other users will see
+            </label>
+            <input type="text" className="form-control" id="InputUserName" required />
+          </div>{" "}
+          <div className="mb-3 text-start">
+            <label htmlFor="InputEmail" className="form-label">
+              Email address
+            </label>
+            <input type="email" className="form-control" id="InputEmail" required defaultValue={email} />
+          </div>
+          <div className="mb-3 text-start">
+            <label htmlFor="InputZip" className="form-label">
+              Zip Code
+            </label>
+            <input type="text" className="form-control" id="InputZip" required />
+          </div>
+          <div className="mb-3 text-start">
+            <label htmlFor="InputImage" className="form-label">
+              Profile Photo
+            </label>
+            <input type="file" onChange={(e) => convertPhoto(this)} />
+          </div>
+          {/* <div className="mb-3 text-start">
+              <label htmlFor ="InputPassword" className="form-label">
                 Password
               </label>
               <input type="password" className="form-control" id="InputPassword" required />
             </div> */}
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary">
+          <div className="text-center">
+            {/* <button type="submit" className="btn btn-primary">
                 Submit
-              </button>
-            </div>
-          </form>{" "}
+              </button> */}
+          </div>
+          {/* </form> */}
         </div>
       </div>
       <div className="col-s-0 col-md-1 col-lg-4"></div>

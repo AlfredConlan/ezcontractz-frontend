@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo, useRef,} from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Trash, Pencil, PlusCircleFill} from "react-bootstrap-icons";
+import { Trash, Pencil, PlusCircleFill } from "react-bootstrap-icons";
 import "./styles.css";
 import axios from "axios";
 import { Modal, Button, Form, Add } from "react-bootstrap";
@@ -62,7 +62,6 @@ const TaskTable = (props) => {
   const { user } = useAuth0();
 
   useEffect(() => {
-    
     if (user) {
       const { email } = user;
       if (email) {
@@ -90,10 +89,11 @@ const TaskTable = (props) => {
     }
 
     retrieveTasks();
-  }, []);
+  }, [user]);
 
   const findByTitle = () => {
-    tasks.findByTitle(tasks)
+    tasks
+      .findByTitle(tasks)
       .then((response) => {
         setTasks(response.data);
       })
@@ -112,12 +112,12 @@ const TaskTable = (props) => {
     const id = tasksRef.current[rowIndex].id;
     console.log(tasksRef.current[rowIndex].id);
     axios.delete("https://ezcontractz-backend.herokuapp.com/tasks/delete/" + id).then((resp) => {
-        console.log(resp)
-        refreshList();
-        // if (resp.data.userDeleted){
-        //   setTriggerUseEffect(triggerUseEffect+1)
-        // }
-      })
+      console.log(resp);
+      refreshList();
+      // if (resp.data.userDeleted){
+      //   setTriggerUseEffect(triggerUseEffect+1)
+      // }
+    });
   };
 
   // Function to submit task via the modal
@@ -188,9 +188,11 @@ const TaskTable = (props) => {
               <span onClick={() => openTasks(rowIdx)}>
                 <Pencil className="far fa-edit action mr-2" />
               </span>
-              <span onClick={() => {
-                deleteTasks(rowIdx)
-              }}>
+              <span
+                onClick={() => {
+                  deleteTasks(rowIdx);
+                }}
+              >
                 <Trash className="bi bi-trash" />
               </span>
             </div>
@@ -218,9 +220,9 @@ const TaskTable = (props) => {
               </button>
               <Button variant="primary" className="btn btn-success ml-5" onClick={handleShow}>
                 Add Task
-               <span className="ml-2">
-                 <PlusCircleFill className="mb-1 pl-3"/>
-                 </span> 
+                <span className="ml-2">
+                  <PlusCircleFill className="mb-1 pl-3" />
+                </span>
               </Button>
             </div>
           </div>

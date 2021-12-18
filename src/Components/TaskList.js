@@ -26,7 +26,7 @@ const TaskList = () => {
               console.log("Username is: ", localStorage.getItem("UserName"));
             } else {
               console.log("Response is empty");
-              document.location.replace("http://localhost:3000/registration");
+              // document.location.replace("http://localhost:3000/registration");
             }
           });
       }
