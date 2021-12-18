@@ -1,7 +1,7 @@
 // src/views/profile.js
 
 // import React from "react";
-import { useEffect } from "react";
+import { useEffect, setState } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -21,9 +21,11 @@ const Profile = () => {
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log(response.status);
           if (response.length !== 0) {
-            console.log("The response is: ", response);
+            //
+            // setState for user image
+            // this.setState({ data: response[0].userImage.toString("base64") });
+
             // const Image = document.getElementById("userImage");
             const FirstName = document.getElementById("userFirstName");
             const LastName = document.getElementById("userLastName");
@@ -31,14 +33,14 @@ const Profile = () => {
             const UserName = document.getElementById("userUserName");
             const Location = document.getElementById("userLocation");
 
-            // Image.innerHTML = "<img src={`data:image/png;base64,${Buffer.from(this.state.data).toString('base64')}`} />";
+            // Image.innerHTML = "<img src={`data:image/jpeg;base64,${this.state.data}`} />";
             FirstName.innerHTML = "First Name: <h5>" + response[0].firstName + "</h5>";
             LastName.innerHTML = "Last Name: <h5>" + response[0].lastName + "</h5>";
             Email.innerHTML = "Email: <h5>" + response[0].email + "</h5>";
             UserName.innerHTML = "Username: <h5>" + response[0].userName + "</h5>";
             Location.innerHTML = "Location: <h5>" + response[0].location + "</h5>";
           } else {
-            document.location.replace("http://localhost:3000/registration");
+            // document.location.replace("http://localhost:3000/registration");
           }
         });
     })();
@@ -48,16 +50,20 @@ const Profile = () => {
   return (
     <div className="container">
       <div>
-        <h1 className="text-center p-4 text-white">Profile</h1>
+        <h1 className="text-center p-4 blue-text">Profile</h1>
       </div>
       <div className="row align-items-center profile-header mt-lg-3">
         <div className=" container col-md-6 text-start text-md-center">
-          <img id="userImage" src="" alt="Profile" className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
-          <p id="userFirstName" className=""></p>
-          <p id="userLastName" className=""></p>
-          <p id="userEmail" className=""></p>
-          <p id="userUserName" className=""></p>
-          <p id="userLocation" className=""></p>
+          <div className="card w-50 ms-auto me-auto">
+            <div className="card-body">
+              {/* <img src="" id="userImage" alt="profile" className="card-img-top rounded-circle img-fluid profile-picture mb-3 mb-md-0" /> */}
+              <p id="userFirstName" className="card-text"></p>
+              <p id="userLastName" className="card-text"></p>
+              <p id="userEmail" className="card-text"></p>
+              <p id="userUserName" className="card-text"></p>
+              <p id="userLocation" className="card-text"></p>
+            </div>
+          </div>
         </div>
       </div>
       {/* <div className="row">
