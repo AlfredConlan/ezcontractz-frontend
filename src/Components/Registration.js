@@ -34,7 +34,7 @@ function Registration() {
           return;
         } else {
           alert("User was added");
-          // document.location.replace("http://localhost:3000/tasks");
+          document.location.replace("https://ezcontractz.com/tasks");
         }
       });
   }
@@ -103,7 +103,7 @@ function Registration() {
     // data.append("source", photo);
     axios
       .post(
-        "http://localhost:3001/image-upload",
+        "https://backend.ezcontractz.com/image-upload",
 
         // body: data,
         { source: photo },
