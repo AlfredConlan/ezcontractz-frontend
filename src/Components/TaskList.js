@@ -1,4 +1,5 @@
 import TaskTable from "./TasksTable";
+import NavBar from "./Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 
@@ -9,6 +10,7 @@ const TaskList = () => {
     if (user) {
       const { email } = user;
       if (email) {
+        console.log("email is ", email);
         const urlString = "https://backend.ezcontractz.com/users/" + email;
         fetch(urlString, {
           method: "GET",
@@ -21,8 +23,16 @@ const TaskList = () => {
           .then((response) => {
             if (response.length !== 0) {
               localStorage.setItem("UserName", response[0].userName);
+              console.log("respone.role = ", response[0].role);
+              if (response[0].role === "admin" || response[0].role === "Admin") {
+                localStorage.setItem("Admin", true);
+                NavBar.setState();
+              } else {
+                localStorage.setItem("Admin", false);
+              }
             } else {
               // document.location.replace("http://localhost:3000/registration");
+              window.location.assign("http://localhost:3000/navbar");
             }
           });
       }

@@ -11,6 +11,7 @@ const Profile = () => {
 
   useEffect(() => {
     (async function () {
+      console.log("email is: ", email);
       const urlString = "https://backend.ezcontractz.com/users/" + email;
       await fetch(urlString, {
         method: "GET",
@@ -25,7 +26,6 @@ const Profile = () => {
             //
             // setState for user image
             // this.setState({ data: response[0].userImage.toString("base64") });
-
             // const Image = document.getElementById("userImage");
             const FirstName = document.getElementById("userFirstName");
             const LastName = document.getElementById("userLastName");
@@ -40,6 +40,7 @@ const Profile = () => {
             UserName.innerHTML = "Username: <h5>" + response[0].userName + "</h5>";
             Location.innerHTML = "Location: <h5>" + response[0].location + "</h5>";
           } else {
+            console.log("Response is empty");
             // document.location.replace("http://localhost:3000/registration");
           }
         });
@@ -63,6 +64,13 @@ const Profile = () => {
               <p id="userUserName" className="card-text"></p>
               <p id="userLocation" className="card-text"></p>
             </div>
+            <div className="text-center">
+              <a href="/registration">
+                <button type="text" className="btn btn-primary mb-3">
+                  Edit
+                </button>
+              </a>
+            </div>{" "}
           </div>
         </div>
       </div>
