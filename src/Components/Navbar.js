@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../Assets/img/logo.png";
+import './Grid.css';
 
 //Import Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";

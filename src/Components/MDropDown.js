@@ -1,29 +1,61 @@
-// import React, { useState } from "react";
-// import { Row, Col, Form, Button, InputGroup, FormControl, Card, Modal, Dropdown} from "react-bootstrap";
+// import React, { useState, useEffect } from "react";
+// import {Dropdown, Button} from "react-bootstrap";
 
-// 
-//     res.status(200).send(allTaskss);
-//   });
-
-// function MDropDown() {
-  
- 
-//   return (
-//     <div>
-//     <Dropdown.Menu show>
-//     <Dropdown.Item eventKey="1">Action</Dropdown.Item>
-//     <Dropdown.Divider />
-//     <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-//     <Dropdown.Divider />
-//     <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
-//     <Dropdown.Divider />
-//     <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-//     </Dropdown.Menu>
-      
-//     </div>
-//   )
-// }
-
-// export default MDropDown
-
+// export default function MDropDown() {
+//     const [tasks, setTasks] = useState([]); 
+//     const [assignedContractor,setAssignedContractor] = useState("")
+//     useEffect(() => {
+//         //fetch to get task by user
+//     const usertask =() => {
+//     fetch(`https://ezcontractz-backend.herokuapp.com/tasks/${localStorage.getItem("UserName")}`)
+//       .then((res) => res.json())
+//       .then((data) => {
+//           if (data.error) {
+//             alert(data.error);
+//           } else {
+//             console.log(data);
+//             setTasks(data.task);
+//           }        
+//       })
+//     }
+//     usertask()
+//     }, [])
+// //fetch to get task by user
+// const usertask =() => {
+//   fetch(`https://ezcontractz-backend.herokuapp.com/tasks/${localStorage.getItem("UserName")}`)
+//     .then((res) => res.json())
+//     .then((data) => {
+//         if (data.error) {
+//           alert(data.error);
+//         } else {
+//           console.log(data);
+//           setTasks(data.task);
+//         }        
+//     })
+// // //put to update the assigned contractor to the task   
+// // const assignContractor = () => {
+// // fetch(`https://ezcontractz-backend.herokuapp.com/tasks/${localStorage.getItem("UserName")}`,{
+// //           method: "PUT",
+// //           credentials: "include",
+// //           headers: {
+// //             "Content-Type": "application/json",
+// //           },
+// //         })
+// //           .then((res) => res.json())
+// //           .then((data) => {
+// //             if (data.error) {
+// //               alert(data.error);
+// //             } else {
+// //               console.log(data);
+// //               setAssignedContractor(assignedContractor);
+// //             }
+// //           });
+// //         }
+// return (
     
+//     // <div className = "cg">
+    
+    
+//     // </div>
+// )
+// }}

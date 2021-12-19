@@ -1,8 +1,10 @@
 .contractorGrid{
-    margin:20px;
+    margin-left: 10%;
+    margin-right: 10%;
     display:flex;
-    align-content: center;
     flex-direction: row;
+    align-content: center;
+    align-items: center;;
     flex-wrap:wrap;
     border-radius:10px;
     overflow:hidden;
@@ -12,16 +14,62 @@
 }
 
 .contractorCard{
-    margin: 20px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    
+
 }
+.contractorCard >div{
+    margin:20px;
+    box-shadow:rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    
+    
+}
+/* h1{
+    color:#203864;
+}
+h4{
+    color:#203864
+} */
 
 h6{
-    color:black
+    color:black;
+    font-size: larger;
 }
+
+/* .mb-2{
+   background-color:#C55A11; 
+   
+} */
 
 /*------------------Search Bar-------------------*/
 .SearchBar {
+    display:flex;
+    flex-direction:column;
     align-items: center;
+    justify-content:center !important; 
     margin:40px;
 }
 
+/* .nav-link:hover {
+    background-color:#BF9000 !important;
+}
+
+.navbarbg{
+    background-color: #203864;
+}
+.assignCButton{
+    color: #BF9000 !important;
+} */
+
+.modal-backdrop.fade{
+    opacity:0.05;
+    filter:alpha(opacity=0);
+}
+/* .modal-backdrop.fade.in {
+    opacity:0.5;
+    filter:alpha(opacity=20);
+} */

@@ -14,19 +14,51 @@ export default function SearchBar() {
     setmodalData(contractor);
     usertask();
   };
-  const [tasks, setTasks] = useState([]);
-  const [assignedContractor, setAssignedContractor] = useState("");
-  const usertask = () => {
+  const [tasks, setTasks] = useState([]); 
+  const [assignedContractor,setAssignedContractor] = useState("")
+  const [taskName,setTaskName] = useState("");
+  
+  const usertask =() => {
     fetch(`https://ezcontractz-backend.herokuapp.com/tasks/${localStorage.getItem("UserName")}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.error) {
-          alert(data.error);
-        } else {
-          setTasks(data);
-        }
-      });
-  };
+          if (data.error) {
+            alert(data.error);
+          } else {
+            console.log(data);
+            setTasks(data);
+          }        
+      })
+    }
+  const assignContractor = () => {
+    const filteredTask = (tasks.filter(task=>task.taskName === taskName));      
+    console.log(filteredTask);
+    fetch(`https://ezcontractz-backend.herokuapp.com/tasks/update/${taskName}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userName: filteredTask.userName,
+              taskName: filteredTask.taskName,
+              category: filteredTask.category,
+              description: filteredTask.description,
+              assignedContractor: modalData.name,
+              scheduled: filteredTask.scheduled,
+              date: filteredTask.date,
+              maxBudget: filteredTask.maxBudget,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.error) {
+                alert(data.error);
+              } else {
+                alert("Your contractor was assigned")
+              }
+            });
+  }
   // const [task, setTask] = useState([]);
   // ----------------------------------------------------Fetch on Submit--------------------------------------------------------------//
   //Note: Typically, a form refreshes on submit, so you have to put in the prevent default so it doesn't. Line 26)
@@ -59,7 +91,7 @@ export default function SearchBar() {
         }}
       >
         <Row className="align-items-center">
-          {/* //------------------------------------------------------------Category Input---------------------------------------------// */}
+{/* //------------------------------------------------------------Category Input---------------------------------------------// */}
           <Col xs="auto">
             <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
               Category
@@ -88,12 +120,12 @@ export default function SearchBar() {
                 <option value="painters">Painters</option>
                 <option value="pest_control">Pest Control</option>
                 <option value="plumbing">Plumbers</option>
-                <option value="homeservices">Roofing</option>
+                <option value="roofing_company">Roofing</option>
                 <option value="tvmounting">TV Mounting</option>
               </select>
             </InputGroup>
           </Col>
-          {/* //--------------------------------------------------Location Input (included validation)----------------------------------// */}
+{/* //--------------------------------------------------Location Input (included validation)----------------------------------// */}
           <Col xs="auto">
             <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
               Location
@@ -113,7 +145,7 @@ export default function SearchBar() {
               />
             </InputGroup>
           </Col>
-          {/* //------------------------------------------------------Search Button with Fetch-----------------------------------------// */}
+{/* //------------------------------------------------------Search Button with Fetch-----------------------------------------// */}
           <Col xs="auto">
             <Button type="submit" className="mb-2">
               Search
@@ -121,33 +153,38 @@ export default function SearchBar() {
           </Col>
         </Row>
       </Form>
-      {/* //-----------------------------------------Map through results and populate card-----------------------------------------// */}
+{/* //-----------------------------------------Map through results and populate card-----------------------------------------// */}
       <div className="contractorGrid">
         {" "}
         {businessInfo.map((contractor, index) => {
           return (
             <div key={index} className="contractorCard">
-              <Card style={{ width: "15rem" }}>
-                <Card.Img variant="top" height="165px" width="70px" src={contractor.image_url} />
+              <Card style={{ width: "28rem" }}>
+                <Card.Img variant="top" height="335px" width="25px" src={contractor.image_url} />
                 <Card.Body>
-                  <Card.Title>
-                    <h6>Name:</h6>
-                    <h6>{contractor.name}</h6>
-                  </Card.Title>
                   <Card.Text>
-                    <h6>Phone:</h6>
-                    <h6>{contractor.display_phone}</h6>
+                    <h6>Name: {contractor.name}</h6>
                   </Card.Text>
                   <Card.Text>
-                    <h6>Rating:</h6> <h6>{contractor.rating}</h6>
+                    <h6>Phone: {contractor.display_phone}</h6>
                   </Card.Text>
                   <Card.Text>
-                    <h6>Rating:</h6> <h6>{contractor.rating}</h6>
+                    <h6>Zip Code: {contractor.location.zip_code}</h6>
                   </Card.Text>
+                  <Card.Text>
+                    <h6>Rating: {contractor.rating}</h6>
+                  </Card.Text>
+                  <Card.Text>
+                    <h6>Review Count: {contractor.review_count}</h6>
+                  </Card.Text>
+                  
+                  {/* <Card.Text>
+                    <h6>Price:</h6> <h6>{contractor.price}</h6>
+                  </Card.Text> */}
                   <Button variant="primary" classname="assignCButton" onClick={() => handleShow(contractor)}>
                     Assign Contractor
                   </Button>
-                  {/* //-----------------------------Modal to assign Contractor(working shell with contractor info and user tasks-----*/}
+{/* //-----------------------------Modal to assign Contractor(working shell with contractor info and user tasks-----*/}
                   <Modal
                     show={show}
                     onHide={handleClose}
@@ -156,38 +193,45 @@ export default function SearchBar() {
                     modalData={modalData} //assigning a prop
                   >
                     <Modal.Header closeButton>
-                      <Modal.Title>{modalData.name}</Modal.Title>
-                      <Modal.Title>{modalData.display_phone}</Modal.Title>
+                      <Modal.Title>{ modalData.name }</Modal.Title><br></br>
+                      <Modal.Title>{ modalData.display_phone }</Modal.Title>
                       {/* <img src={modalData.image_url} height="30%" width="30%"/> */}
                     </Modal.Header>
 
-                    <Modal.Body></Modal.Body>
-                    {/*------------------------------------------------ Dropdown menu that contains user tasks --------------------------*/}
-                    <Dropdown>
-                      <Dropdown.Toggle>Select the task to assign to this contractor.</Dropdown.Toggle>
-                      <Dropdown.Menu show>
-                        {" "}
-                        {tasks.map((task, index) => {
-                          return (
-                            <div key={index}>
-                              <Dropdown.Item eventKey="1">{task.taskName}</Dropdown.Item>
-                              <Dropdown.Divider />
-                            </div>
-                          );
-                        })}
-                      </Dropdown.Menu>
+                    <Modal.Body>
+{/*------------------------------------------------ Dropdown menu that contains user tasks --------------------------*/}
+                    <Dropdown onSelect={(e) => setTaskName(e)}>
+                      <Dropdown.Toggle >Select the task to assign to this contractor.</Dropdown.Toggle>
+                        <Dropdown.Menu show> {
+                        tasks.map((task, index) => { 
+                        return(   <div key={index}>           
+                          <Dropdown.Item eventKey={task.taskName}>{task.taskName}</Dropdown.Item>
+                          <Dropdown.Divider /> 
+                          </div>    
+                        )          
+                      }         
+                    )
+                  }</Dropdown.Menu>
                     </Dropdown>
-                    {/*------------------------------------------------End of Dropdown Menu---------------------------------------------*/}
+{/*------------------------------------------------End of Dropdown Menu---------------------------------------------*/}
+                  </Modal.Body>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
                     <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
+                      <Button variant="secondary" onClick={assignContractor}>
                         Assign
                       </Button>
                       <Button variant="primary" onClick={handleClose}>
-                        Go to Task List
+                        Close
                       </Button>
                     </Modal.Footer>
                   </Modal>
-                  {/*--------------------------------------------------End of Modal--------------------------------------------------- */}
+{/*--------------------------------------------------End of Modal--------------------------------------------------- */}       
                 </Card.Body>
               </Card>
             </div>
