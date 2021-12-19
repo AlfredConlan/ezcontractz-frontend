@@ -1,14 +1,13 @@
 import "./Registration.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
+// import axios from "axios";
 
-function Registration() {
+const Registration = () => {
   const { user } = useAuth0();
   const { given_name, family_name, email } = user;
 
   function registerUser() {
     if (user) {
-      const { email } = user;
       if (email) {
         fetch("https://backend.ezcontractz.com/users", {
           method: "POST",
@@ -179,6 +178,6 @@ function Registration() {
       <div className="col-s-0 col-md-1 col-lg-4"></div>
     </div>
   );
-}
+};
 
 export default Registration;
