@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 // import axios from "axios";
 
 const Registration = () => {
-  const { user } = useAuth0();
+  const { user } = useAuth0;
   const { given_name, family_name, email } = user;
 
   function registerUser() {
