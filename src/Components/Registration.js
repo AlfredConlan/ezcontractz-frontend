@@ -7,36 +7,41 @@ function Registration() {
   const { given_name, family_name, email } = user;
 
   function registerUser() {
-    fetch("https://backend.ezcontractz.com/users", {
-      method: "POST",
-      headers: {
-        // Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName: document.getElementById("InputFirstName").value,
-        lastName: document.getElementById("InputLastName").value,
-        userName: document.getElementById("InputUserName").value,
-        email: document.getElementById("InputEmail").value,
-        location: document.getElementById("InputZip").value,
-        role: "user",
-        userImage: document.getElementById("InputImage").value,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const userName = document.getElementById("InputUserName").value;
-        localStorage.setItem("UserName", userName);
-      })
-      .then((res) => {
-        let user_name = localStorage.getItem("UserName");
-        if (user_name === "No One" || user_name === null) {
-          return;
-        } else {
-          alert("User was added");
-          document.location.replace("https://ezcontractz.com/tasks");
-        }
-      });
+    if (user) {
+      const { email } = user;
+      if (email) {
+        fetch("https://backend.ezcontractz.com/users", {
+          method: "POST",
+          headers: {
+            // Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: document.getElementById("InputFirstName").value,
+            lastName: document.getElementById("InputLastName").value,
+            userName: document.getElementById("InputUserName").value,
+            email: document.getElementById("InputEmail").value,
+            location: document.getElementById("InputZip").value,
+            role: "user",
+            userImage: document.getElementById("InputImage").value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            const userName = document.getElementById("InputUserName").value;
+            localStorage.setItem("UserName", userName);
+          })
+          .then((res) => {
+            let user_name = localStorage.getItem("UserName");
+            if (user_name === "No One" || user_name === null) {
+              return;
+            } else {
+              alert("User was added");
+              document.location.replace("https://ezcontractz.com/tasks");
+            }
+          });
+      }
+    }
   }
 
   function validateRegistration(e) {
