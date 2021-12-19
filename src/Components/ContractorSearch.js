@@ -1,16 +1,15 @@
-import React from 'react';
-import SearchBar from './SearchBar';
-import Contractor from './Contractor';
-import YelpFetch from './YelpFetch';
+import React from "react";
+import SearchBar from "./SearchBar";
 
 function ContractorSearch() {
-    return (
-        <div>
-           <SearchBar/>
-           <Contractor/> 
-           <YelpFetch />
-        </div>
-    )
+  return (
+    <div>
+      <div>
+        <h1 className="text-center p-4 blue-text">Contractor Search</h1>
+      </div>
+      <SearchBar />
+    </div>
+  );
 }
 
-export default ContractorSearch
+export default ContractorSearch;

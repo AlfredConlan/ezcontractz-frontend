@@ -1,15 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Balsamiq+Sans:regular,bold,italic&subset=latin,latin-ext');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Balsamiq Sans',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #FBFFF1 !important;
+  background-color: #939799 !important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Balsamiq Sans',
+  sans-serif;
 }
 

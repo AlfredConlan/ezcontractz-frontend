@@ -2,14 +2,14 @@ import AdminList from "./AdminTable";
 
 function AdminDash() {
   return (
-    <container>
+    <div className="container">
       <div>
-        <h1 className="text-center p-4 text-primary">Administration Dashboard</h1>
+        <h1 className="text-center p-4 blue-text ">Administration Dashboard</h1>
       </div>
       <div>
         <AdminList />
       </div>
-    </container>
+    </div>
   );
 }
 

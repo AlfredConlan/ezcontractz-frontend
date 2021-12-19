@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef, setState } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles.css";
 import { Trash, Pencil } from "react-bootstrap-icons";
 import axios from "axios";
 // const user = require("../models/users");
@@ -24,13 +25,15 @@ const AdminTable = (props) => {
 
   // Fetching users from database
   const retrieveUsers = () => {
-    fetch("https://ezcontractz-backend.herokuapp.com/users")
+    fetch("https://backend.ezcontractz.com/users")
       .then((resp) => resp.json())
       .then((resp) => {
         setUsers(resp);
-        console.log(users);
       });
   };
+
+  // Search Bar Functionality
+  const searchCriteria = users.filter((user) => user.userName.includes(searchUsers));
 
   const refreshList = () => {
     retrieveUsers();
@@ -54,8 +57,7 @@ const AdminTable = (props) => {
 
   const deleteUsers = (rowIndex) => {
     const userName = usersRef.current[rowIndex].id;
-    axios.delete("https://ezcontractz-backend.herokuapp.com/users/delete/" + userName).then((resp) => {
-      console.log(resp);
+    axios.delete("https://backend.ezcontractz.com/users/delete/" + userName).then((resp) => {
       refreshList();
       // if (resp.data.userDeleted){
       //   setTriggerUseEffect(triggerUseEffect+1)
@@ -101,14 +103,14 @@ const AdminTable = (props) => {
           return (
             <div className="grid">
               <span onClick={() => openUsers(rowIdx)}>
-                <Pencil className="far fa-edit action mr-2" />
+                <Pencil className="far fa-edit action ms-2 xl" />
               </span>
               <span
                 onClick={() => {
                   deleteUsers(rowIdx);
                 }}
               >
-                <Trash className="bi bi-trash" />
+                <Trash className="bi bi-trash ms-2 xxl" fill="red" />
               </span>
             </div>
           );
@@ -120,7 +122,7 @@ const AdminTable = (props) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data: users,
+    data: searchCriteria ? searchCriteria : users,
   });
 
   return (

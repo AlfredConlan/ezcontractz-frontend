@@ -1,7 +1,7 @@
 // src/views/profile.js
 
 // import React from "react";
-import { useEffect } from "react";
+import { useEffect, setState } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -11,7 +11,8 @@ const Profile = () => {
 
   useEffect(() => {
     (async function () {
-      const urlString = "https://ezcontractz-backend.herokuapp.com/users/" + email;
+      console.log("email is: ", email);
+      const urlString = "https://backend.ezcontractz.com/users/" + email;
       await fetch(urlString, {
         method: "GET",
         headers: {
@@ -21,24 +22,26 @@ const Profile = () => {
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log(response.status);
-          if (response.status === 200) {
-            console.log("The response is: ", response);
-            const Image = document.getElementById("userImage");
+          if (response.length !== 0) {
+            //
+            // setState for user image
+            // this.setState({ data: response[0].userImage.toString("base64") });
+            // const Image = document.getElementById("userImage");
             const FirstName = document.getElementById("userFirstName");
             const LastName = document.getElementById("userLastName");
             const Email = document.getElementById("userEmail");
             const UserName = document.getElementById("userUserName");
             const Location = document.getElementById("userLocation");
 
-            Image.innerHTML = response[0].userImage;
+            // Image.innerHTML = "<img src={`data:image/jpeg;base64,${this.state.data}`} />";
             FirstName.innerHTML = "First Name: <h5>" + response[0].firstName + "</h5>";
             LastName.innerHTML = "Last Name: <h5>" + response[0].lastName + "</h5>";
             Email.innerHTML = "Email: <h5>" + response[0].email + "</h5>";
             UserName.innerHTML = "Username: <h5>" + response[0].userName + "</h5>";
             Location.innerHTML = "Location: <h5>" + response[0].location + "</h5>";
           } else {
-            document.location.replace("https://ezcontractz.herokuapp.com:3000/registration");
+            console.log("Response is empty");
+            // document.location.replace("http://localhost:3000/registration");
           }
         });
     })();
@@ -48,16 +51,27 @@ const Profile = () => {
   return (
     <div className="container">
       <div>
-        <h1 className="text-center p-4 text-primary">Profile</h1>
+        <h1 className="text-center p-4 blue-text">Profile</h1>
       </div>
       <div className="row align-items-center profile-header mt-lg-3">
         <div className=" container col-md-6 text-start text-md-center">
-          <img id="userImage" src="" alt="Profile" className="rounded-circle img-fluid profile-picture mb-3 mb-md-0" />
-          <p id="userFirstName" className="lead"></p>
-          <p id="userLastName" className="lead"></p>
-          <p id="userEmail" className="lead"></p>
-          <p id="userUserName" className="lead"></p>
-          <p id="userLocation" className="lead"></p>
+          <div className="card w-50 ms-auto me-auto">
+            <div className="card-body">
+              {/* <img src="" id="userImage" alt="profile" className="card-img-top rounded-circle img-fluid profile-picture mb-3 mb-md-0" /> */}
+              <p id="userFirstName" className="card-text"></p>
+              <p id="userLastName" className="card-text"></p>
+              <p id="userEmail" className="card-text"></p>
+              <p id="userUserName" className="card-text"></p>
+              <p id="userLocation" className="card-text"></p>
+            </div>
+            <div className="text-center">
+              <a href="/registration">
+                <button type="text" className="btn btn-primary mb-3">
+                  Edit
+                </button>
+              </a>
+            </div>{" "}
+          </div>
         </div>
       </div>
       {/* <div className="row">
