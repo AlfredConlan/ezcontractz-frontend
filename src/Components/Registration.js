@@ -87,44 +87,45 @@ function Registration() {
   //   uploadPhoto(photo);
   // }
 
-  function encodeImageFileAsURL(fileData) {
-    alert(fileData);
-    if (fileData) {
-      var reader = new FileReader();
-      reader.onloadend = function () {
-        uploadPhoto(reader.result.substring("data:image/png;base64,".length).trim());
-      };
-      reader.readAsDataURL(fileData);
-    }
-  }
+  // function encodeImageFileAsURL(fileData) {
+  //   alert(fileData);
+  //   if (fileData) {
+  //     var reader = new FileReader();
+  //     reader.onloadend = function () {
+  //       uploadPhoto(reader.result.substring("data:image/png;base64,".length).trim());
+  //     };
+  //     reader.readAsDataURL(fileData);
+  //   }
+  // }
 
-  function uploadPhoto(photo) {
-    // const data = new FormData();
-    // data.append("source", photo);
-    axios
-      .post(
-        "https://backend.ezcontractz.com/image-upload",
+  // function uploadPhoto(photo) {
+  //   // const data = new FormData();
+  //   // data.append("source", photo);
+  //   axios
+  //     .post(
+  //       "https://backend.ezcontractz.com/image-upload",
 
-        // body: data,
-        { source: photo },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      // .then((res) => res.json())
-      .then((res) => {});
-    // .then((res) => {
+  //       // body: data,
+  //       { source: photo },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     )
+  //     // .then((res) => res.json())
+  //     .then((res) => {});
+  //   // .then((res) => {
 
-    // });
-  }
+  //   // });
+  // }
+
   return (
     <div className="row showBackground">
       <div className="col-s-0 col-md-1 col-lg-4"></div>
       <div className="col">
         <div className="container border border-primary border-2 mt-5 bg-white loginBackground">
-          <form autoComplete="off" className="pb-3 pt-3">
+          <form autoComplete="off" className="pb-3 pt-3" onSubmit={validateRegistration}>
             <div className="mb-3 text-start">
               <h1 className="text-center p-4 blue-text">Your Profile</h1>
               <label htmlFor="InputFirstName" className="form-label">

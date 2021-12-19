@@ -25,7 +25,7 @@ function App() {
         <ProtectedRoute exact path="/admin" component={AdminDash} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/aboutus" component={AboutUs} />
-        <ProtectedRoute exact path="/registration" component={Registration} />
+        <Route exact path="/registration" component={Registration} />
         <Route exact path="/" component={Home} />
         <Route exact path="/home" component={Home} />
 
