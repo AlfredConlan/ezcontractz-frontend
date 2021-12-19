@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-  font-family: 'Balsamiq Sans',
+  font-family: 'Roboto',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -10,7 +10,7 @@ body {
 }
 
 code {
-  font-family: 'Balsamiq Sans',
+  font-family: 'Roboto',
   sans-serif;
 }
 
