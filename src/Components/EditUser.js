@@ -33,7 +33,7 @@ const EditUser = () => {
         if (user_name === "No One" || user_name === null) {
           return;
         } else {
-          alert("User was added");
+          alert("Profile was updated");
           document.location.replace("https://ezcontractz-frontend.herokuapp.com/tasks");
         }
       });
