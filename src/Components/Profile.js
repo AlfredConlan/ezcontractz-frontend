@@ -65,7 +65,7 @@ const Profile = () => {
               <p id="userLocation" className="card-text"></p>
             </div>
             <div className="text-center">
-              <a href="/registration">
+              <a href="/edituser">
                 <button type="text" className="btn btn-primary mb-3">
                   Edit
                 </button>
