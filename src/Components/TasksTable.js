@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
-
+import React, { useState, useEffect, useMemo, useRef, } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Trash, Pencil, PlusCircleFill } from "react-bootstrap-icons";
+import { Trash, Pencil, PlusCircleFill, Hammer } from "react-bootstrap-icons";
 import "./styles.css";
 import axios from "axios";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const TaskTable = (props) => {
@@ -15,6 +14,9 @@ const TaskTable = (props) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [show2, setShow2] = useState(false);
+  const handle2Close = () => setShow2(false);
+  const handle2Show = () => setShow2(true);
   const [newTask, setNewTask] = useState({
     taskName: "",
     description: "",
@@ -23,6 +25,7 @@ const TaskTable = (props) => {
     assignedContractor: "",
     date: "",
   });
+  const [categories, setCategories] = useState("");
 
   tasksRef.current = tasks;
 
@@ -36,8 +39,6 @@ const TaskTable = (props) => {
   //Trying to Update State of Modal Form to capture values
   const onInputChange = (e) => {
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
-    // setNewTask({...newTask,[e.target.description]: e.target.value})
-    // setNewTask({...newTask,[e.target.name]: e.target.value})
   };
 
   // Not working
@@ -56,10 +57,11 @@ const TaskTable = (props) => {
       });
   };
 
-  //Refreshing the task list
+  //Refreshing the task list 
   const refreshList = () => {
     retrieveTasks();
   };
+
 
   useEffect(() => {
     if (user) {
@@ -85,10 +87,10 @@ const TaskTable = (props) => {
     }
 
     retrieveTasks();
-  }, [user]);
+  }, []);
 
   //Search Bar
-  const searchCriteria = tasks.filter((task) => task.taskName.includes(searchTasks));
+  const searchCriteria = tasks.filter(task => task.taskName.includes(searchTasks))
 
   const openTasks = (rowIndex) => {
     const id = tasks.current[rowIndex].id;
@@ -103,7 +105,7 @@ const TaskTable = (props) => {
       // if (resp.data.userDeleted){
       //   setTriggerUseEffect(triggerUseEffect+1)
       // }
-    });
+    })
   };
 
   // Function to submit task via the modal
@@ -132,6 +134,34 @@ const TaskTable = (props) => {
         handleClose();
       });
   };
+
+  // Function to submit task via the modal
+  const handle2Submit = (e) => {
+    e.preventDefault();
+    // setNewTask(taskName, description, maxBudget);
+    const requestOptions = {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userName: localStorage.getItem("UserName"),
+        taskName: newTask.taskName,
+        description: newTask.description,
+        maxBudget: newTask.maxBudget,
+        assignedContractor: newTask.assignedContractor,
+        scheduled: newTask.scheduled,
+        date: newTask.date,
+        category: newTask.category,
+      }),
+    };
+    fetch("https://ezcontractz-backend.herokuapp.com/tasks/updatebyid/" + newTask.taskName, requestOptions)
+      .then((response) => response.json())
+      .then((resp) => {
+        refreshList();
+        handleClose();
+      });
+  };
+
 
   const columns = useMemo(
     () => [
@@ -168,21 +198,26 @@ const TaskTable = (props) => {
         accessor: "actions",
         Cell: (props) => {
           const rowIdx = props.row.id;
+          const editRow = props.row
+          // const rowIdxEdit =;
           return (
             <div>
+              <span>
+                <Hammer className="far fa-edit action ms-2 xxl" 
+                onClick={() => document.location.replace("/contractor-search")} 
+                />
+              </span>
               <span
-              // onClick={() => handleShowEdit(rowIdx)}
+                onClick={() => handle2Show(editRow)}
               >
                 <Pencil className="far fa-edit action ms-2 xl" />
               </span>
-
-              <span
-                onClick={() => {
-                  deleteTasks(rowIdx);
-                }}
-              >
+              <span onClick={() => {
+                deleteTasks(rowIdx)
+              }}>
                 <Trash className="bi bi-trash ms-2 xxl" fill="red" />
               </span>
+
             </div>
           );
         },
@@ -239,6 +274,7 @@ const TaskTable = (props) => {
         </div>
       </div>
 
+
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>ADD A TASK!</Modal.Title>
@@ -249,33 +285,44 @@ const TaskTable = (props) => {
               <Form.Label>Task Name</Form.Label>
               <Form.Control type="taskName" value={newTask.taskName} name="taskName" placeholder="Task Name" onChange={(e) => onInputChange(e)} />
             </Form.Group>
-            <Form.Group controlId="custom-select" className="mb-3">
-              <Form.Label>Select Category</Form.Label>
-              <Form.Control as="select" className="" value={newTask.category}>
-                <option className="d-none">Select Category</option>
-                {[
-                  "Carpet Cleaning",
-                  "Cleaning",
-                  "Drywall",
-                  "Electricians",
-                  "Garage Door Repair",
-                  "HVAC Repair",
-                  "Lawn Care",
-                  "Painters",
-                  "Pest Control",
-                  "Plumbers",
-                  "Roofing",
-                  "TV Mounting",
-                ].map((option) => (
-                  <option key={option}>{option}</option>
-                ))}
-              </Form.Control>
+            <Form.Group controlId="custom-select" className="mb-3" value={newTask.category}>
+              {/* <Form.Control value={newTask.taskName} /> */}
+              <InputGroup className="mb-2" value={newTask.category}>
+                <InputGroup.Text>Category</InputGroup.Text>
+                <select
+                  required
+                  onChange={(e) => {
+                    onInputChange(e);
+                  }}
+                  className="me-sm-2"
+                  input
+                  id="category"
+                // value={newTask.category}
+
+                >
+                  <option active selected disabled value="">
+                    Select Category
+                  </option>
+                  <option value="carpet_cleaning">Carpet Cleaning</option>
+                  <option value="homecleaning">Cleaning</option>
+                  <option value="drywall">Drywall</option>
+                  <option value="electricians">Electricians</option>
+                  <option value="garage_door_services">Garage Door Repair</option>
+                  <option value="hvac">HVAC Repair</option>
+                  <option value="lawnservices">Lawn Care</option>
+                  <option value="painters">Painters</option>
+                  <option value="pest_control">Pest Control</option>
+                  <option value="plumbing">Plumbers</option>
+                  <option value="roofing_company">Roofing</option>
+                  <option value="tvmounting">TV Mounting</option>
+                </select>
+              </InputGroup>
             </Form.Group>
             <Form.Group className="mb-3" controlId="description">
               <Form.Label>Description</Form.Label>
               <Form.Control type="description" value={newTask.description} name="description" placeholder="Description" onChange={(e) => onInputChange(e)} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="assignedContractor">
+            {/* <Form.Group className="mb-3" controlId="assignedContractor">
               <Form.Label>Assigned Contractor</Form.Label>
               <Form.Control
                 type="assignedContractor"
@@ -284,8 +331,8 @@ const TaskTable = (props) => {
                 placeholder="Assigned Contractor"
                 onChange={(e) => onInputChange(e)}
               />
-            </Form.Group>
-            <Form.Group controlId="date">
+            </Form.Group> */}
+            <Form.Group controlId="date" className="mb-3">
               <Form.Label>Select Date</Form.Label>
               <Form.Control type="date" name="date" value={newTask.scheduled} placeholder="Schedule Date" onChange={(e) => onInputChange(e)} />
             </Form.Group>
@@ -315,6 +362,93 @@ const TaskTable = (props) => {
                     <Button variant="primary" type="submit" >ADD TASK</Button> */}
         </Modal.Footer>
       </Modal>
+
+      <Modal show={show2} onHide={handle2Close} backdrop="static" keyboard={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Your Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handle2Submit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Task Name</Form.Label>
+              <Form.Control type="taskName" value={newTask.taskName} name="taskName" placeholder="Task Name" onChange={(e) => onInputChange(e)} />
+            </Form.Group>
+            <Form.Group controlId="custom-select" className="mb-3">
+              <InputGroup className="mb-2">
+                <InputGroup.Text>Category</InputGroup.Text>
+                <select
+                  required
+                  onChange={(e) => {
+                    onInputChange(e);
+                  }}
+                  className="me-sm-2"
+                  input
+                  id="category"
+                >
+                  <option active selected disabled value="">
+                    Select Category
+                  </option>
+                  <option value="carpet_cleaning">Carpet Cleaning</option>
+                  <option value="homecleaning">Cleaning</option>
+                  <option value="drywall">Drywall</option>
+                  <option value="electricians">Electricians</option>
+                  <option value="garage_door_services">Garage Door Repair</option>
+                  <option value="hvac">HVAC Repair</option>
+                  <option value="lawnservices">Lawn Care</option>
+                  <option value="painters">Painters</option>
+                  <option value="pest_control">Pest Control</option>
+                  <option value="plumbing">Plumbers</option>
+                  <option value="roofing_company">Roofing</option>
+                  <option value="tvmounting">TV Mounting</option>
+                </select>
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control type="description" value={newTask.description} name="description" placeholder="Description" onChange={(e) => onInputChange(e)} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="assignedContractor">
+              <Form.Label>Assigned Contractor</Form.Label>
+              <Form.Control
+                type="assignedContractor"
+                value={newTask.assignedContractor}
+                name="assignedContractor"
+                placeholder="Assigned Contractor"
+                onChange={(e) => onInputChange(e)}
+              />
+            </Form.Group>
+            <Form.Group controlId="date" className="mb-3">
+              <Form.Label>Select Date</Form.Label>
+              <Form.Control type="date" name="date" value={newTask.scheduled} placeholder="Schedule Date" onChange={(e) => onInputChange(e)} />
+            </Form.Group>
+            {/* <Form.Group className="mb-3" controlId="scheduled">
+              <Form.Label>Scheduled</Form.Label>
+              <Form.Control type="scheduled" value={newTask.scheduled} name="scheduled" placeholder="Scheduled"
+                onChange={(e) => onInputChange(e)} />
+            </Form.Group> */}
+            <Form.Group className="mb-3" controlId="maxBudget">
+              <Form.Label>Max Budget</Form.Label>
+              <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)" onChange={(e) => onInputChange(e)} />
+            </Form.Group>
+            <Form.Group>
+              <Button variant="secondary" onClick={handle2Close}>
+                Close
+              </Button>
+              <Button variant="primary" type="submit" className="pe-4">
+                ADD TASK
+              </Button>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" type="submit" >ADD TASK</Button> */}
+        </Modal.Footer>
+      </Modal>
+
+
     </div>
   );
 };
