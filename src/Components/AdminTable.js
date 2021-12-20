@@ -10,6 +10,7 @@ const AdminTable = (props) => {
   const [users, setUsers] = useState([]);
   const [searchUsers, setSearchUsers] = useState("");
   const usersRef = useRef();
+  // eslint-disable-next-line no-unused-vars
   const [triggerUseEffect, setTriggerUseEffect] = useState(1);
 
   usersRef.current = users;
