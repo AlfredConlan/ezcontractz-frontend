@@ -27,7 +27,7 @@ function App() {
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/aboutus" component={AboutUs} />
         <ProtectedRoute exact path="/edituser" component={EditUser} />
-        <Route exact path="/registration" component={Registration} />
+        <ProtectedRoute exact path="/registration" component={Registration} />
         <Route exact path="/" component={Home} />
         <Route exact path="/home" component={Home} />
 
