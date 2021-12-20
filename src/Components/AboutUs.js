@@ -1,6 +1,7 @@
 import React from "react";
 import { Github, Linkedin, EnvelopeFill } from "react-bootstrap-icons";
-import Carmen from '../Assets/img/Carmen.jpg';
+import Carmen from "../Assets/img/Carmen.jpg";
+import Al from "../Assets/img/Al.jpg";
 
 export default function AboutUs() {
   return (
@@ -35,7 +36,7 @@ export default function AboutUs() {
         </div>
         <div className="col-sm-6 col-lg-4">
           <div className="card text-center clean-card ratio-1x1">
-            <img className="card-img-top w-100 d-block" alt="Profile" src={Carmen}/>
+            <img className="card-img-top w-100 d-block" alt="Profile" src={Carmen} />
             <div className="card-body info">
               <h4 className="card-title">Carmen Kesho</h4>
               <p className="card-text">Full-Stack Web Developer with DigitalCrafts</p>
@@ -47,13 +48,13 @@ export default function AboutUs() {
               </a>
               <a href="https://www.linkedin.com/in/carmenvkesho/" target="_blank" rel="noreferrer">
                 <Linkedin size={36} className="p-1" />
-              </a>              
+              </a>
             </div>
           </div>
         </div>
         <div className="col-sm-6 col-lg-4">
           <div className="card text-center clean-card ratio-1x1">
-            <img className="card-img-top w-100 d-block" alt="Profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0e1dL4l1oicfd7dWUYumTL8cTBsNrLRLjYQ&usqp=CAU" />
+            <img className="card-img-top w-100 d-block" alt="Profile" src={Al} />
             <div className="card-body info">
               <h4 className="card-title">Al Conlan</h4>
               <p className="card-text">Full-Stack Web Developer with DigitalCrafts</p>
