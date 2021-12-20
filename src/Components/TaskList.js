@@ -35,7 +35,7 @@ const TaskList = () => {
                 localStorage.setItem("Admin", false);
               }
             } else {
-              document.location.replace("https://ezcontractz.com/registration");
+              document.location.replace("https://frontend.ezcontractz.com/registration");
               // window.location.assign("http://localhost:3000/navbar");
             }
           });
