@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../Assets/img/logo.png";
-import './Grid.css';
+import "./Grid.css";
 
 //Import Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -40,12 +40,6 @@ function NavBar() {
                   About Us
                 </Link>
                 <AuthenticationButton />
-                {/* <Link to="/login" style={{ textDecoration: "none" }} className="nav-link">
-                Login
-              </Link> */}
-                {/* <Link to="/AboutUs" style={{ textDecoration: "none" }} className="nav-link">
-                AboutUs
-              </Link> */}
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -71,6 +65,9 @@ function NavBar() {
                 <Link to="/contractor-search" style={{ textDecoration: "none" }} className="nav-link text-white">
                   ContractorSearch
                 </Link>
+                <Link to="/admin" id="adminLink" style={{ textDecoration: "none" }} className="nav-link text-white">
+                  Admin
+                </Link>
                 <Link to="/profile" style={{ textDecoration: "none" }} className="nav-link text-white">
                   Profile
                 </Link>
@@ -78,12 +75,6 @@ function NavBar() {
                   About Us
                 </Link>
                 <AuthenticationButton />
-                {/* <Link to="/login" style={{ textDecoration: "none" }} className="nav-link">
-                Login
-              </Link> */}
-                {/* <Link to="/AboutUs" style={{ textDecoration: "none" }} className="nav-link">
-                AboutUs
-              </Link> */}
               </Nav>
             </Navbar.Collapse>
           </Container>
