@@ -120,7 +120,6 @@ export default function SearchBar() {
                 <option value="painters">Painters</option>
                 <option value="pest_control">Pest Control</option>
                 <option value="plumbing">Plumbers</option>
-                <option value="roofing_company">Roofing</option>
                 <option value="tvmounting">TV Mounting</option>
               </select>
             </InputGroup>
@@ -159,7 +158,7 @@ export default function SearchBar() {
         {businessInfo.map((contractor, index) => {
           return (
             <div key={index} className="contractorCard">
-              <Card style={{ width: "28rem" }}>
+              <Card style={{ width: "23rem" }}>
                 <Card.Img variant="top" height="335px" width="25px" src={contractor.image_url} />
                 <Card.Body>
                   <Card.Text>
