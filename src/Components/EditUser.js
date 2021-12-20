@@ -1,14 +1,15 @@
 import "./Registration.css";
 // import axios from "axios";
+import { useEffect } from "react";
 
-const Registration = () => {
-  let firstName = localStorage.getItem("FirstName");
-  let lastName = localStorage.getItem("LastName");
-  let email = localStorage.getItem("Email");
-
-  function registerUser() {
-    fetch("https://backend.ezcontractz.com/users", {
-      method: "POST",
+const EditUser = () => {
+  let userName = localStorage.getItem("UserName");
+  function updateUser() {
+    console.log("username is", userName);
+    const url = "https://backend.ezcontractz.com/users/modify/" + userName;
+    console.log("url is ", url);
+    fetch(url, {
+      method: "PUT",
       headers: {
         // Accept: "application/json",
         "Content-Type": "application/json",
@@ -74,50 +75,49 @@ const Registration = () => {
       //   document.getElementById("InputPassword").focus();
       //   return false;
     } else {
-      registerUser();
+      updateUser();
     }
   }
 
-  // function convertPhoto(e) {
-  //   e.preventDefault();
+  useEffect(() => {
+    (async function () {
+      let email = localStorage.getItem("Email");
+      console.log("email is: ", email);
+      const urlString = "https://backend.ezcontractz.com/users/" + email;
+      await fetch(urlString, {
+        method: "GET",
+        headers: {
+          // Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.length !== 0) {
+            //
+            // setState for user image
+            // this.setState({ data: response[0].userImage.toString("base64") });
+            // const Image = document.getElementById("userImage");
+            const FirstName = document.getElementById("InputFirstName");
+            const LastName = document.getElementById("InputLastName");
+            const Email = document.getElementById("InputEmail");
+            const UserName = document.getElementById("InputUserName");
+            const Location = document.getElementById("InputZip");
 
-  //   let photo = document.getElementById("InputImage").value;
-
-  //   uploadPhoto(photo);
-  // }
-
-  // function encodeImageFileAsURL(fileData) {
-  //   alert(fileData);
-  //   if (fileData) {
-  //     var reader = new FileReader();
-  //     reader.onloadend = function () {
-  //       uploadPhoto(reader.result.substring("data:image/png;base64,".length).trim());
-  //     };
-  //     reader.readAsDataURL(fileData);
-  //   }
-  // }
-
-  // function uploadPhoto(photo) {
-  //   // const data = new FormData();
-  //   // data.append("source", photo);
-  //   axios
-  //     .post(
-  //       "https://backend.ezcontractz.com/image-upload",
-
-  //       // body: data,
-  //       { source: photo },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-  //     // .then((res) => res.json())
-  //     .then((res) => {});
-  //   // .then((res) => {
-
-  //   // });
-  // }
+            // Image.innerHTML = "<img src={`data:image/jpeg;base64,${this.state.data}`} />";
+            FirstName.defaultValue = response[0].firstName;
+            LastName.defaultValue = response[0].lastName;
+            Email.defaultValue = response[0].email;
+            UserName.defaultValue = response[0].userName;
+            Location.defaultValue = response[0].location;
+          } else {
+            console.log("Response is empty");
+            // document.location.replace("http://localhost:3000/registration");
+          }
+        });
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="row showBackground">
@@ -130,13 +130,13 @@ const Registration = () => {
               <label htmlFor="InputFirstName" className="form-label">
                 First Name
               </label>
-              <input type="text" className="form-control" id="InputFirstName" required defaultValue={firstName} />
+              <input type="text" className="form-control" id="InputFirstName" required />
             </div>
             <div className="mb-3 text-start">
               <label htmlFor="InputLastName" className="form-label">
                 Last Name
               </label>
-              <input type="text" className="form-control" id="InputLastName" required defaultValue={lastName} />
+              <input type="text" className="form-control" id="InputLastName" required />
             </div>
             <div className="mb-3 text-start">
               <label htmlFor="InputUserName" className="form-label">
@@ -148,7 +148,7 @@ const Registration = () => {
               <label htmlFor="InputEmail" className="form-label">
                 Email address
               </label>
-              <input type="email" className="form-control" id="InputEmail" required defaultValue={email} />
+              <input type="email" className="form-control" id="InputEmail" required />
             </div>
             <div className="mb-3 text-start">
               <label htmlFor="InputZip" className="form-label">
@@ -175,4 +175,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default EditUser;

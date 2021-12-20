@@ -12,6 +12,7 @@ import ProtectedRoute from "./auth/protected-route";
 import Registration from "./Components/Registration";
 import AboutUs from "./Components/AboutUs";
 import Home from "./Components/Home";
+import EditUser from "./Components/EditUser";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <ProtectedRoute exact path="/admin" component={AdminDash} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/aboutus" component={AboutUs} />
+        <ProtectedRoute exact path="/edituser" component={EditUser} />
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/" component={Home} />
         <Route exact path="/home" component={Home} />
