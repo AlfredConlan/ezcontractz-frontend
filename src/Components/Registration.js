@@ -34,7 +34,7 @@ const Registration = () => {
           return;
         } else {
           alert("User was added");
-          document.location.replace("https://ezcontractz.com/tasks");
+          document.location.replace("https://frontend.ezcontractz.com/tasks");
         }
       });
   }
