@@ -20,7 +20,6 @@ const Registration = () => {
         email: document.getElementById("InputEmail").value,
         location: document.getElementById("InputZip").value,
         role: "user",
-        userImage: document.getElementById("InputImage").value,
       }),
     })
       .then((res) => res.json())
