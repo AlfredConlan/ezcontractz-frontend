@@ -50,12 +50,10 @@ const TaskTable = (props) => {
   // Fetching tasks from database - NEED TO UPDATE TO TARGET BASED ON USER NAME
   const retrieveTasks = () => {
     const user_name = localStorage.getItem("UserName");
-    console.log(user_name);
     fetch("https://backend.ezcontractz.com/tasks/" + user_name)
       .then((resp) => resp.json())
       .then((resp) => {
         setTasks(resp);
-        console.log(resp);
       });
   };
 
@@ -79,13 +77,9 @@ const TaskTable = (props) => {
         })
           .then((response) => response.json())
           .then((response) => {
-            console.log("Response.length = ", response.length);
             if (response.length !== 0) {
-              console.log("The response is: ", response);
               localStorage.setItem("UserName", response[0].userName);
-              console.log("Username is: ", localStorage.getItem("UserName"));
               // } else {
-              console.log("Response is empty");
               //   document.location.replace("http://localhost:3000/registration");
             }
           });
@@ -106,9 +100,7 @@ const TaskTable = (props) => {
 
   const deleteTasks = (rowIndex) => {
     const id = tasksRef.current[rowIndex].id;
-    console.log(tasksRef.current[rowIndex].id);
     axios.delete("https://ezcontractz-backend.herokuapp.com/tasks/delete/" + id).then((resp) => {
-      console.log(resp)
       refreshList();
       // if (resp.data.userDeleted){
       //   setTriggerUseEffect(triggerUseEffect+1)
@@ -137,9 +129,7 @@ const TaskTable = (props) => {
     };
     fetch("https://ezcontractz-backend.herokuapp.com/tasks", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data))
       .then((resp) => {
-        console.log(resp);
         refreshList();
         handleClose();
       });
@@ -166,9 +156,7 @@ const TaskTable = (props) => {
     };
     fetch("https://ezcontractz-backend.herokuapp.com/tasks/updatebyid/" + newTask.taskName, requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data))
       .then((resp) => {
-        console.log(resp);
         refreshList();
         handleClose();
       });

@@ -4,11 +4,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 
 const TaskList = () => {
-  const { user } = useAuth0;
+  const { user } = useAuth0();
 
   useEffect(() => {
     if (user) {
-      const { email } = user;
+      const { given_name, family_name, email } = user;
+      localStorage.setItem("FirstName", given_name);
+      localStorage.setItem("LastName", family_name);
+      localStorage.setItem("Email", email);
+
       if (email) {
         console.log("email is ", email);
         const urlString = "https://backend.ezcontractz.com/users/" + email;
@@ -31,7 +35,7 @@ const TaskList = () => {
                 localStorage.setItem("Admin", false);
               }
             } else {
-              document.location.replace("https://ezcontractz.com/registration");
+              document.location.replace("https://ezcontractz-frontend.herokuapp.com/registration");
               // window.location.assign("http://localhost:3000/navbar");
             }
           });
