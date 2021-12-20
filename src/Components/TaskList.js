@@ -30,7 +30,8 @@ const TaskList = () => {
               console.log("response.role = ", response[0].role);
               if (response[0].role === "admin" || response[0].role === "Admin") {
                 localStorage.setItem("Admin", true);
-                // NavBar.setState();
+                // window.location.assign("/Navbar");
+                // window.location.assign("/tasks");
               } else {
                 localStorage.setItem("Admin", false);
               }
