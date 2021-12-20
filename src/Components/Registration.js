@@ -1,46 +1,42 @@
 import "./Registration.css";
-import { useAuth0 } from "@auth0/auth0-react";
 // import axios from "axios";
 
 const Registration = () => {
-  const { user } = useAuth0;
-  const { given_name, family_name, email } = user;
+  let firstName = localStorage.getItem("FirstName");
+  let lastName = localStorage.getItem("LastName");
+  let email = localStorage.getItem("Email");
 
   function registerUser() {
-    if (user) {
-      if (email) {
-        fetch("https://backend.ezcontractz.com/users", {
-          method: "POST",
-          headers: {
-            // Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName: document.getElementById("InputFirstName").value,
-            lastName: document.getElementById("InputLastName").value,
-            userName: document.getElementById("InputUserName").value,
-            email: document.getElementById("InputEmail").value,
-            location: document.getElementById("InputZip").value,
-            role: "user",
-            userImage: document.getElementById("InputImage").value,
-          }),
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            const userName = document.getElementById("InputUserName").value;
-            localStorage.setItem("UserName", userName);
-          })
-          .then((res) => {
-            let user_name = localStorage.getItem("UserName");
-            if (user_name === "No One" || user_name === null) {
-              return;
-            } else {
-              alert("User was added");
-              document.location.replace("https://ezcontractz.com/tasks");
-            }
-          });
-      }
-    }
+    fetch("https://backend.ezcontractz.com/users", {
+      method: "POST",
+      headers: {
+        // Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: document.getElementById("InputFirstName").value,
+        lastName: document.getElementById("InputLastName").value,
+        userName: document.getElementById("InputUserName").value,
+        email: document.getElementById("InputEmail").value,
+        location: document.getElementById("InputZip").value,
+        role: "user",
+        userImage: document.getElementById("InputImage").value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const userName = document.getElementById("InputUserName").value;
+        localStorage.setItem("UserName", userName);
+      })
+      .then((res) => {
+        let user_name = localStorage.getItem("UserName");
+        if (user_name === "No One" || user_name === null) {
+          return;
+        } else {
+          alert("User was added");
+          document.location.replace("https://ezcontractz.com/tasks");
+        }
+      });
   }
 
   function validateRegistration(e) {
@@ -135,13 +131,13 @@ const Registration = () => {
               <label htmlFor="InputFirstName" className="form-label">
                 First Name
               </label>
-              <input type="text" className="form-control" id="InputFirstName" required defaultValue={given_name} />
+              <input type="text" className="form-control" id="InputFirstName" required defaultValue={firstName} />
             </div>
             <div className="mb-3 text-start">
               <label htmlFor="InputLastName" className="form-label">
                 Last Name
               </label>
-              <input type="text" className="form-control" id="InputLastName" required defaultValue={family_name} />
+              <input type="text" className="form-control" id="InputLastName" required defaultValue={lastName} />
             </div>
             <div className="mb-3 text-start">
               <label htmlFor="InputUserName" className="form-label">

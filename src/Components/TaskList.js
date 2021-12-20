@@ -4,11 +4,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 
 const TaskList = () => {
-  const { user } = useAuth0;
+  const { user } = useAuth0();
 
   useEffect(() => {
     if (user) {
-      const { email } = user;
+      const { given_name, family_name, email } = user;
+      localStorage.setItem("FirstName", given_name);
+      localStorage.setItem("LastName", family_name);
+      localStorage.setItem("Email", email);
+
       if (email) {
         console.log("email is ", email);
         const urlString = "https://backend.ezcontractz.com/users/" + email;
