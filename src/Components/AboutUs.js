@@ -16,6 +16,7 @@ export default function AboutUs() {
       </div>
       <div className="row justify-content-center">
         <div className="col-sm-6 col-lg-4">
+          {/* Jake's Card */}
           <div className="card text-center clean-card ratio-1x1 h-75 p-2 ms-2 me-2">
             <img className="card-img-top d-block resize .img-fluid" alt="Profile" src={Jake} />
             <div className="card-body info">
@@ -34,6 +35,7 @@ export default function AboutUs() {
           </div>
         </div>
         <div className="col-sm-6 col-lg-4">
+          {/* Carmen's Card */}
           <div className="card text-center clean-card ratio-1x1 h-75 p-2 ms-2 me-2">
             <img className="card-img-top d-block resize .img-fluid" alt="Profile" src={Carmen} />
             <div className="card-body info">
@@ -52,6 +54,7 @@ export default function AboutUs() {
           </div>
         </div>
         <div className="col-sm-6 col-lg-4">
+          {/* Al's Card */}
           <div className="card text-center clean-card ratio-1x1 h-75 p-2 ms-2 me-2">
             <img className="card-img-top resize .img-fluid" alt="Profile" src={Al} />
             <div className="card-body info">

@@ -1,13 +1,13 @@
 import "./Registration.css";
-// import axios from "axios";
 import { useEffect } from "react";
 
 const EditUser = () => {
+  // Get UserName to add to fetch URL
   let userName = localStorage.getItem("UserName");
+
+  // Update the user based on form fields
   function updateUser() {
-    console.log("username is", userName);
     const url = "https://backend.ezcontractz.com/users/modify/" + userName;
-    console.log("url is ", url);
     fetch(url, {
       method: "PUT",
       headers: {
@@ -15,6 +15,7 @@ const EditUser = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        // Send form values as body
         firstName: document.getElementById("InputFirstName").value,
         lastName: document.getElementById("InputLastName").value,
         userName: document.getElementById("InputUserName").value,
@@ -23,17 +24,20 @@ const EditUser = () => {
         role: "user",
       }),
     })
+      // Convert response to JSON format
       .then((res) => res.json())
       .then((res) => {
         const userName = document.getElementById("InputUserName").value;
+        // Store userName for use in API calls
         localStorage.setItem("UserName", userName);
       })
       .then((res) => {
         let user_name = localStorage.getItem("UserName");
-        if (user_name === "No One" || user_name === null) {
+        if (user_name === null) {
           return;
         } else {
           alert("Profile was updated");
+          // Update was successful. Redirect to Task component
           document.location.replace("https://ezcontractz-frontend.herokuapp.com/tasks");
         }
       });
@@ -41,6 +45,8 @@ const EditUser = () => {
 
   function validateRegistration(e) {
     e.preventDefault();
+
+    // Validate that each field has the proper data
     if (document.getElementById("InputFirstName").value === "") {
       alert("Please provide your First Name!");
       document.getElementById("InputFirstName").focus();
@@ -69,20 +75,19 @@ const EditUser = () => {
       alert("Zip Code must be 5 digits!");
       document.getElementById("InputZip").focus();
       return false;
-      // }
-      // if (document.getElementById("InputPassword").value === "") {
-      //   alert("Please provide your Password!");
-      //   document.getElementById("InputPassword").focus();
-      //   return false;
     } else {
+      //All the fields passed validation. Perform the update
       updateUser();
     }
   }
 
+  // This useEffect will run once after the initial rendering
   useEffect(() => {
     (async function () {
+      // Get the email
       let email = localStorage.getItem("Email");
-      console.log("email is: ", email);
+
+      // fetch the data using email
       const urlString = "https://backend.ezcontractz.com/users/" + email;
       await fetch(urlString, {
         method: "GET",
@@ -93,18 +98,16 @@ const EditUser = () => {
       })
         .then((response) => response.json())
         .then((response) => {
+          // If the response is not empty, fill in the values
           if (response.length !== 0) {
-            //
-            // setState for user image
-            // this.setState({ data: response[0].userImage.toString("base64") });
-            // const Image = document.getElementById("userImage");
+            // Get references to the elements
             const FirstName = document.getElementById("InputFirstName");
             const LastName = document.getElementById("InputLastName");
             const Email = document.getElementById("InputEmail");
             const UserName = document.getElementById("InputUserName");
             const Location = document.getElementById("InputZip");
 
-            // Image.innerHTML = "<img src={`data:image/jpeg;base64,${this.state.data}`} />";
+            // Set the default value for the fields
             FirstName.defaultValue = response[0].firstName;
             LastName.defaultValue = response[0].lastName;
             Email.defaultValue = response[0].email;
@@ -112,7 +115,6 @@ const EditUser = () => {
             Location.defaultValue = response[0].location;
           } else {
             console.log("Response is empty");
-            // document.location.replace("http://localhost:3000/registration");
           }
         });
     })();
@@ -156,12 +158,6 @@ const EditUser = () => {
               </label>
               <input type="text" className="form-control" id="InputZip" required />
             </div>
-            {/* <div className="mb-3 text-start">
-              <label htmlFor="InputImage" className="form-label">
-                Profile Photo
-              </label>
-              <input type="file" onChange={(e) => encodeImageFileAsURL(e.target.files[0])} />{" "}
-            </div> */}
             <div className="text-center">
               <button type="submit" className="btn btn-primary">
                 Submit
