@@ -31,7 +31,7 @@ export default function SearchBar() {
   };
   const assignContractor = () => {
     const filteredTask = tasks.filter((task) => task.taskName === taskName);
-    console.log(filteredTask);
+//     console.log(filteredTask);
     fetch(`https://ezcontractz-backend.herokuapp.com/tasks/update/${taskName}`, {
       method: "PUT",
       credentials: "include",
