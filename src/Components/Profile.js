@@ -1,17 +1,14 @@
-// src/views/profile.js
-
-// import React from "react";
-import { useEffect, setState } from "react";
-
+import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
+  // Get the email from the login data returned from Auth0
   const { user } = useAuth0();
   const { email } = user;
 
+  // This useEffect with run once after page load
   useEffect(() => {
     (async function () {
-      console.log("email is: ", email);
       const urlString = "https://backend.ezcontractz.com/users/" + email;
       await fetch(urlString, {
         method: "GET",
@@ -22,18 +19,16 @@ const Profile = () => {
       })
         .then((response) => response.json())
         .then((response) => {
+          // If the response is not empty, pre-populate the form
           if (response.length !== 0) {
-            //
-            // setState for user image
-            // this.setState({ data: response[0].userImage.toString("base64") });
-            // const Image = document.getElementById("userImage");
+            // Get the references
             const FirstName = document.getElementById("userFirstName");
             const LastName = document.getElementById("userLastName");
             const Email = document.getElementById("userEmail");
             const UserName = document.getElementById("userUserName");
             const Location = document.getElementById("userLocation");
 
-            // Image.innerHTML = "<img src={`data:image/jpeg;base64,${this.state.data}`} />";
+            // Fill in the defaultValue of the fields
             FirstName.innerHTML = "First Name: <h5>" + response[0].firstName + "</h5>";
             LastName.innerHTML = "Last Name: <h5>" + response[0].lastName + "</h5>";
             Email.innerHTML = "Email: <h5>" + response[0].email + "</h5>";
@@ -41,7 +36,6 @@ const Profile = () => {
             Location.innerHTML = "Location: <h5>" + response[0].location + "</h5>";
           } else {
             console.log("Response is empty");
-            // document.location.replace("http://localhost:3000/registration");
           }
         });
     })();
@@ -57,7 +51,6 @@ const Profile = () => {
         <div className=" container col-md-6 text-start text-md-center">
           <div className="card w-50 ms-auto me-auto">
             <div className="card-body">
-              {/* <img src="" id="userImage" alt="profile" className="card-img-top rounded-circle img-fluid profile-picture mb-3 mb-md-0" /> */}
               <p id="userFirstName" className="card-text"></p>
               <p id="userLastName" className="card-text"></p>
               <p id="userEmail" className="card-text"></p>
@@ -74,9 +67,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      {/* <div className="row">
-        <pre className="col-12 text-light bg-dark p-4">{JSON.stringify(user, null, 2)}</pre>
-      </div> */}
     </div>
   );
 };

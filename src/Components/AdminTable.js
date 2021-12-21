@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef,} from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
@@ -9,6 +9,7 @@ const AdminTable = (props) => {
   const [users, setUsers] = useState([]);
   const [searchUsers, setSearchUsers] = useState("");
   const usersRef = useRef();
+  // eslint-disable-next-line no-unused-vars
   const [triggerUseEffect, setTriggerUseEffect] = useState(1);
 
   usersRef.current = users;
@@ -108,6 +109,7 @@ const AdminTable = (props) => {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
