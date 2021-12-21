@@ -370,7 +370,7 @@ const TaskTable = (props) => {
               </InputGroup>
             </Form.Group>
             <Form.Group className="mb-3" controlId="description">
-              <Form.Label>{taskEdit.taskName}</Form.Label>
+              <Form.Label>Description</Form.Label>
               <Form.Control type="description" value={newTask.description} name="description" placeholder="Description" onChange={(e) => onInputChange(e)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="assignedContractor">
