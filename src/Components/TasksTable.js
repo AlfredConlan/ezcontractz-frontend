@@ -16,7 +16,10 @@ const TaskTable = (props) => {
   const handleShow = () => setShow(true);
   const [show2, setShow2] = useState(false);
   const handle2Close = () => setShow2(false);
-  const handle2Show = () => setShow2(true);
+  const handle2Show = (rowIndex) => {
+    setShow2(true)
+  };
+  // Defining newTask in order to pass data in post request 
   const [newTask, setNewTask] = useState({
     taskName: "",
     description: "",
@@ -25,16 +28,19 @@ const TaskTable = (props) => {
     assignedContractor: "",
     date: "",
   });
-  const [categories, setCategories] = useState("");
+  const [taskEdit, setTaskEdit] = useState({
+    taskName: "",
+    description: "",
+    maxBudget: "",
+    category: "",
+    assignedContractor: "",
+    date: "",
+  });
 
   tasksRef.current = tasks;
 
   //Setting user
   const { user } = useAuth0();
-
-  //Declaring variables for newTask modal
-
-  const { taskName, description, maxBudget } = newTask;
 
   //Trying to Update State of Modal Form to capture values
   const onInputChange = (e) => {
@@ -71,7 +77,6 @@ const TaskTable = (props) => {
         fetch(urlString, {
           method: "GET",
           headers: {
-            // Accept: "application/json",
             "Content-Type": "application/json",
           },
         })
@@ -79,39 +84,27 @@ const TaskTable = (props) => {
           .then((response) => {
             if (response.length !== 0) {
               localStorage.setItem("UserName", response[0].userName);
-              // } else {
-              //   document.location.replace("http://localhost:3000/registration");
             }
           });
       }
     }
-
     retrieveTasks();
   }, []);
 
   //Search Bar
   const searchCriteria = tasks.filter(task => task.taskName.includes(searchTasks))
 
-  const openTasks = (rowIndex) => {
-    const id = tasks.current[rowIndex].id;
-
-    props.history.push("/tasks/" + id);
-  };
-
+  // Delete task Function
   const deleteTasks = (rowIndex) => {
     const id = tasksRef.current[rowIndex].id;
     axios.delete("https://ezcontractz-backend.herokuapp.com/tasks/delete/" + id).then((resp) => {
       refreshList();
-      // if (resp.data.userDeleted){
-      //   setTriggerUseEffect(triggerUseEffect+1)
-      // }
     })
   };
 
-  // Function to submit task via the modal
+  // Function to add a task via the modal
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setNewTask(taskName, description, maxBudget);
     const requestOptions = {
       method: "POST",
       credentials: "include",
@@ -135,10 +128,9 @@ const TaskTable = (props) => {
       });
   };
 
-  // Function to submit task via the modal
+  // Function to edit task via the modal
   const handle2Submit = (e) => {
     e.preventDefault();
-    // setNewTask(taskName, description, maxBudget);
     const requestOptions = {
       method: "PUT",
       credentials: "include",
@@ -162,7 +154,7 @@ const TaskTable = (props) => {
       });
   };
 
-
+  // Defining the columns for the React Table 
   const columns = useMemo(
     () => [
       {
@@ -181,10 +173,6 @@ const TaskTable = (props) => {
         Header: "Assigned Contractor",
         accessor: "assignedContractor",
       },
-      // {
-      //   Header: "Scheduled",
-      //   accessor: "scheduled",
-      // },
       {
         Header: "Date",
         accessor: "date",
@@ -198,8 +186,6 @@ const TaskTable = (props) => {
         accessor: "actions",
         Cell: (props) => {
           const rowIdx = props.row.id;
-          const editRow = props.row
-          // const rowIdxEdit =;
           return (
             <div>
               <span>
@@ -208,7 +194,7 @@ const TaskTable = (props) => {
                 />
               </span>
               <span
-                onClick={() => handle2Show(editRow)}
+                onClick={() => handle2Show()}
               >
                 <Pencil className="far fa-edit action ms-2 xl" />
               </span>
@@ -217,7 +203,6 @@ const TaskTable = (props) => {
               }}>
                 <Trash className="bi bi-trash ms-2 xxl" fill="red" />
               </span>
-
             </div>
           );
         },
@@ -225,7 +210,8 @@ const TaskTable = (props) => {
     ],
     []
   );
-
+  
+  // Search Bar Functionality 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
     data: searchCriteria ? searchCriteria : tasks,
@@ -274,7 +260,7 @@ const TaskTable = (props) => {
         </div>
       </div>
 
-
+      {/* // Modal to add task  */}
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>ADD A TASK!</Modal.Title>
@@ -297,8 +283,6 @@ const TaskTable = (props) => {
                   className="me-sm-2"
                   input
                   id="category"
-                // value={newTask.category}
-
                 >
                   <option active selected disabled value="">
                     Select Category
@@ -322,25 +306,10 @@ const TaskTable = (props) => {
               <Form.Label>Description</Form.Label>
               <Form.Control type="description" value={newTask.description} name="description" placeholder="Description" onChange={(e) => onInputChange(e)} />
             </Form.Group>
-            {/* <Form.Group className="mb-3" controlId="assignedContractor">
-              <Form.Label>Assigned Contractor</Form.Label>
-              <Form.Control
-                type="assignedContractor"
-                value={newTask.assignedContractor}
-                name="assignedContractor"
-                placeholder="Assigned Contractor"
-                onChange={(e) => onInputChange(e)}
-              />
-            </Form.Group> */}
             <Form.Group controlId="date" className="mb-3">
               <Form.Label>Select Date</Form.Label>
               <Form.Control type="date" name="date" value={newTask.scheduled} placeholder="Schedule Date" onChange={(e) => onInputChange(e)} />
             </Form.Group>
-            {/* <Form.Group className="mb-3" controlId="scheduled">
-              <Form.Label>Scheduled</Form.Label>
-              <Form.Control type="scheduled" value={newTask.scheduled} name="scheduled" placeholder="Scheduled"
-                onChange={(e) => onInputChange(e)} />
-            </Form.Group> */}
             <Form.Group className="mb-3" controlId="maxBudget">
               <Form.Label>Max Budget</Form.Label>
               <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)" onChange={(e) => onInputChange(e)} />
@@ -356,13 +325,10 @@ const TaskTable = (props) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" type="submit" >ADD TASK</Button> */}
         </Modal.Footer>
       </Modal>
 
+      {/* Second modal for editing the task  */}
       <Modal show={show2} onHide={handle2Close} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>Update Your Task</Modal.Title>
@@ -404,7 +370,7 @@ const TaskTable = (props) => {
               </InputGroup>
             </Form.Group>
             <Form.Group className="mb-3" controlId="description">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>{taskEdit.taskName}</Form.Label>
               <Form.Control type="description" value={newTask.description} name="description" placeholder="Description" onChange={(e) => onInputChange(e)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="assignedContractor">
@@ -421,11 +387,6 @@ const TaskTable = (props) => {
               <Form.Label>Select Date</Form.Label>
               <Form.Control type="date" name="date" value={newTask.scheduled} placeholder="Schedule Date" onChange={(e) => onInputChange(e)} />
             </Form.Group>
-            {/* <Form.Group className="mb-3" controlId="scheduled">
-              <Form.Label>Scheduled</Form.Label>
-              <Form.Control type="scheduled" value={newTask.scheduled} name="scheduled" placeholder="Scheduled"
-                onChange={(e) => onInputChange(e)} />
-            </Form.Group> */}
             <Form.Group className="mb-3" controlId="maxBudget">
               <Form.Label>Max Budget</Form.Label>
               <Form.Control type="maxBudget" value={newTask.maxBudget} name="maxBudget" placeholder="Max Budget (Number)" onChange={(e) => onInputChange(e)} />
@@ -441,14 +402,8 @@ const TaskTable = (props) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" type="submit" >ADD TASK</Button> */}
         </Modal.Footer>
       </Modal>
-
-
     </div>
   );
 };

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef, setState } from "react";
+import React, { useState, useEffect, useMemo, useRef,} from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import { Trash, Pencil } from "react-bootstrap-icons";
 import axios from "axios";
-// const user = require("../models/users");
 
 const AdminTable = (props) => {
   const [users, setUsers] = useState([]);
@@ -50,18 +49,10 @@ const AdminTable = (props) => {
       });
   };
 
-  const openUsers = (rowIndex) => {
-    const id = users.current[rowIndex].id;
-    props.history.push("" + id);
-  };
-
   const deleteUsers = (rowIndex) => {
     const userName = usersRef.current[rowIndex].id;
     axios.delete("https://backend.ezcontractz.com/users/delete/" + userName).then((resp) => {
       refreshList();
-      // if (resp.data.userDeleted){
-      //   setTriggerUseEffect(triggerUseEffect+1)
-      // }
     });
   };
 
@@ -102,7 +93,7 @@ const AdminTable = (props) => {
           const rowIdx = props.row.id;
           return (
             <div className="grid">
-              <span onClick={() => openUsers(rowIdx)}>
+              <span>
                 <Pencil className="far fa-edit action ms-2 xl" />
               </span>
               <span
