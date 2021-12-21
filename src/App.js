@@ -1,6 +1,4 @@
-// import Data from "./Components/taskList";
 import React from "react";
-// import BasicTable from "./Components/dataTable";
 import { Switch, Route } from "react-router-dom";
 import TaskList from "./Components/TaskList";
 import Navbar from "./Components/Navbar";
@@ -19,8 +17,6 @@ function App() {
     <Auth0ProviderWithHistory>
       <Navbar />
       <Switch>
-        {/* UNCOMMENT THE SECTION BELOW TO ENABLE LOGIN/REGISTRATION */}
-        {/*-------------------------------------------------------------*/}
         <ProtectedRoute exact path="/contractor-search" component={ContractorSearch} />
         <ProtectedRoute exact path="/tasks" component={TaskList} />
         <ProtectedRoute exact path="/admin" component={AdminDash} />
@@ -30,17 +26,6 @@ function App() {
         <ProtectedRoute exact path="/registration" component={Registration} />
         <Route exact path="/" component={Home} />
         <Route exact path="/home" component={Home} />
-
-        {/* UNCOMMENT THE SECTION BELOW TO DISABLE LOGIN/REGISTRATION */}
-        {/*-------------------------------------------------------------*/}
-        {/* <Route exact path="/contractor-search" component={ContractorSearch} />
-        <Route exact path="/tasks" component={TaskList} />
-        <Route exact path="/admin" component={AdminDash} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/aboutus" component={AboutUs} />
-        <Route exact path="/registration" component={Registration} />
-        <Route exact path="/" component={Home} />
-        <Route exact path="/home" component={Home} />{" "} */}
       </Switch>
     </Auth0ProviderWithHistory>
   );

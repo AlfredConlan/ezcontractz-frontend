@@ -1,5 +1,6 @@
 import "./home.css";
 
+// Landing page / welcome screen
 function Home() {
   return (
     <div className="background-photo">

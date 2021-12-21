@@ -9,11 +9,10 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import AuthenticationButton from "./AuthenticationButton";
 
 function NavBar() {
+  // Check if the user is an admin
   let isAdmin = localStorage.getItem("Admin");
-  console.log("isAdmin = ", isAdmin);
   if (isAdmin === true) {
-    console.log("Admin = true");
-
+    // If the uer is an admin, show the navbar with the Admin link
     return (
       <div>
         <Navbar collapseOnSelect expand="sm" className="blue-background" variant="dark">
@@ -47,8 +46,7 @@ function NavBar() {
       </div>
     );
   } else {
-    console.log("Admin = false");
-
+    // If the uer is not an admin, show the navbar without the Admin link
     return (
       <div>
         <Navbar collapseOnSelect expand="sm" className="blue-background" variant="dark">
@@ -64,9 +62,6 @@ function NavBar() {
                 </Link>
                 <Link to="/contractor-search" style={{ textDecoration: "none" }} className="nav-link text-white">
                   ContractorSearch
-                </Link>
-                <Link to="/admin" id="adminLink" style={{ textDecoration: "none" }} className="nav-link text-white">
-                  Admin
                 </Link>
                 <Link to="/profile" style={{ textDecoration: "none" }} className="nav-link text-white">
                   Profile

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef, setState } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useTable } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
@@ -118,6 +118,7 @@ const AdminTable = (props) => {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

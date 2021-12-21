@@ -1,7 +1,7 @@
 import "./Registration.css";
-// import axios from "axios";
 
 const Registration = () => {
+  // get the user info out of localStorage
   let firstName = localStorage.getItem("FirstName");
   let lastName = localStorage.getItem("LastName");
   let email = localStorage.getItem("Email");
@@ -14,6 +14,7 @@ const Registration = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        // Create the body from the form fields values
         firstName: document.getElementById("InputFirstName").value,
         lastName: document.getElementById("InputLastName").value,
         userName: document.getElementById("InputUserName").value,
@@ -24,14 +25,17 @@ const Registration = () => {
     })
       .then((res) => res.json())
       .then((res) => {
+        // Store the user's username for API calls
         const userName = document.getElementById("InputUserName").value;
         localStorage.setItem("UserName", userName);
       })
       .then((res) => {
         let user_name = localStorage.getItem("UserName");
-        if (user_name === "No One" || user_name === null) {
+        // If the username is empty, return
+        if (user_name === null) {
           return;
         } else {
+          // Let the user know they were added and reroute them to the tasks component
           alert("User was added");
           document.location.replace("https://ezcontractz-frontend.herokuapp.com/tasks");
         }
@@ -40,6 +44,8 @@ const Registration = () => {
 
   function validateRegistration(e) {
     e.preventDefault();
+
+    // Validate the values in each field
     if (document.getElementById("InputFirstName").value === "") {
       alert("Please provide your First Name!");
       document.getElementById("InputFirstName").focus();
@@ -68,56 +74,11 @@ const Registration = () => {
       alert("Zip Code must be 5 digits!");
       document.getElementById("InputZip").focus();
       return false;
-      // }
-      // if (document.getElementById("InputPassword").value === "") {
-      //   alert("Please provide your Password!");
-      //   document.getElementById("InputPassword").focus();
-      //   return false;
     } else {
+      //Everything is validated so register the user
       registerUser();
     }
   }
-
-  // function convertPhoto(e) {
-  //   e.preventDefault();
-
-  //   let photo = document.getElementById("InputImage").value;
-
-  //   uploadPhoto(photo);
-  // }
-
-  // function encodeImageFileAsURL(fileData) {
-  //   alert(fileData);
-  //   if (fileData) {
-  //     var reader = new FileReader();
-  //     reader.onloadend = function () {
-  //       uploadPhoto(reader.result.substring("data:image/png;base64,".length).trim());
-  //     };
-  //     reader.readAsDataURL(fileData);
-  //   }
-  // }
-
-  // function uploadPhoto(photo) {
-  //   // const data = new FormData();
-  //   // data.append("source", photo);
-  //   axios
-  //     .post(
-  //       "https://backend.ezcontractz.com/image-upload",
-
-  //       // body: data,
-  //       { source: photo },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-  //     // .then((res) => res.json())
-  //     .then((res) => {});
-  //   // .then((res) => {
-
-  //   // });
-  // }
 
   return (
     <div className="row showBackground">
@@ -156,12 +117,6 @@ const Registration = () => {
               </label>
               <input type="text" className="form-control" id="InputZip" required />
             </div>
-            {/* <div className="mb-3 text-start">
-              <label htmlFor="InputImage" className="form-label">
-                Profile Photo
-              </label>
-              <input type="file" onChange={(e) => encodeImageFileAsURL(e.target.files[0])} />{" "}
-            </div> */}
             <div className="text-center">
               <button type="submit" className="btn btn-primary">
                 Submit
